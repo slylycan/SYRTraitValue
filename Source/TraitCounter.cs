@@ -33,12 +33,12 @@ namespace SyrTraitValue
                     traitsWithValue += traitValues;
                     if (degrees != modExtension.traitValues.Count())
                     {
-                        Log.Warning("WARNING: Trait " + t.LabelCap + " has " + degrees + " degrees, but " + traitValues + ". You should configure one value per trait degree data.");
+                        Log.Warning("WARNING: Trait " + t.label.ToString() + " has " + degrees + " degrees, but " + traitValues + " values. You should configure one value per trait degree data.");
                     }
                 }
             }
 
-            Log.Message("Trait Value Trait Counter - Traits: " + traitsInTotal + " | Traits with an assigned value: " + traitsWithValue);
+            Log.Message("[SYR]Trait Value Analysis || Traits: " + traitsInTotal + " - Traits with an assigned value: " + traitsWithValue);
         }
     }
 }

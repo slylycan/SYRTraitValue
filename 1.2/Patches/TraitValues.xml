@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Patch>
 
-  <Operation Class="PatchOperationAddModExtension">
-    <xpath>*/TraitDef[defName = "Nudist"]</xpath>
-    <value>
-      <li Class="SyrTraitValue.TraitValueExtension">
-        <traitValues>
-          <li>-20</li>
-        </traitValues>
-      </li>
-    </value>
+  <Operation Class="PatchOperationFindMod">
+    <mods>
+      <li>[SYR] Trait Value</li>
+    </mods>
+    <match Class="PatchOperationSequence">
+      <operations>
+        <li Class="PatchOperationAddModExtension">
+          <xpath>*/TraitDef[defName = "Beauty"]</xpath>
+          <value>
+            <li Class="SyrTraitValue.TraitValueExtension">
+              <traitValues>
+                <li>-2, -50</li>
+                <li>-1, -20</li>
+                <li>1, 20</li>
+                <!--<li>2, 50</li>-->
+              </traitValues>
+            </li>
+          </value>
+        </li>
+      </operations>
+    </match>
   </Operation>
+
+
 
 </Patch>

@@ -7,7 +7,7 @@
     <ProjectGuid>{51E5342D-FEA2-4B72-91BC-2FC9FD291405}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TraitValue</RootNamespace>
+    <RootNamespace>SyrTraitValue</RootNamespace>
     <AssemblyName>TraitValue</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -58,6 +58,7 @@
     <Compile Include="TraitCounter.cs" />
     <Compile Include="TraitValueExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TraitValueUtility.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
