@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+	<TraitValueSettingsCategory>Trait Value Framework</TraitValueSettingsCategory>
+	<SyrTraitValue_EnableColors>Enable Trait Colors</SyrTraitValue_EnableColors>
+	<SyrTraitValue_EnableColorsTooltip>Traits will be colored based on their value. You can set colors for bad, neutral, good and the best traits. Colors will transition smoothly inbetween.</SyrTraitValue_EnableColorsTooltip>
+
+</LanguageData>

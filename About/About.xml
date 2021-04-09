@@ -3,13 +3,16 @@
   <name>[SYR] Trait Value</name>
   <author>Syrchalis</author>
   <supportedVersions>
-      <li>1.0</li>
-      <li>1.1</li>
       <li>1.2</li>
   </supportedVersions>
 	<url>https://ludeon.com/forums/index.php?topic=43449</url>
-  <description>Extends TraitDefs with a value field to make it easy to give traits a numerical value of how good they are. This allows other mod makers to use the value.</description>
+  <description>Gives traits a numerical value that represents roughly how beneficial they are. Other mod makers may use this value to create mods that directly relate to trait benefit.
+  
+  Load before ANY trait mod.</description>
   <packageId>syrchalis.traitvalue</packageId>
   <modDependencies>
   </modDependencies>
+  <loadBefore>
+    <li>syrchalis.individuality</li>
+  </loadBefore>
 </ModMetaData>

@@ -36,14 +36,22 @@ namespace SyrTraitValue
             else
             {
                 string[] array = xmlRoot.FirstChild.Value.Split(new char[] { ',' });
-                if (array.Length != 2)
+                if (array.Length == 1)
                 {
-                    Log.ErrorOnce(string.Format("Trait values need two numbers seperated by a comma. Wrong value: {0}", xmlRoot.FirstChild.Value), 16205552, false);
+                    degree = 0;
+                    value = ParseHelper.FromString<int>(array[0]);
                 }
-                degree = ParseHelper.FromString<int>(array[0]);
-                value = ParseHelper.FromString<int>(array[1]);
+                else if (array.Length != 2)
+                {
+                    Log.ErrorOnce(string.Format("Trait values need two numbers seperated by a comma. Or a single number. Wrong value: {0}", xmlRoot.FirstChild.Value), 16205552, false);
+                }
+                else
+                {
+                    degree = ParseHelper.FromString<int>(array[0]);
+                    value = ParseHelper.FromString<int>(array[1]);
+                }
             }
-            Log.Message("Degree: '" + degree + "' | Value: '" + value + "'");
+            //Log.Message("Degree: '" + degree + "' | Value: '" + value + "'");
         }
     }
 }
