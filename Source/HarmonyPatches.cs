@@ -17,10 +17,13 @@ namespace SyrTraitValue
         {
             var harmony = new Harmony("Syrchalis.Rimworld.TraitValue");
             harmony.PatchAll(Assembly.GetExecutingAssembly());
+            TraitValueUtility.CacheTraitDefs();
             TraitValueUtility.CountTraits();
+            TraitValueUtility.CacheXMLValues();
+            TraitValueUtility.LoadSavedValues(false);
             if (TraitValueSettings.enableColors)
             {
-                TraitValueUtility.ColorTraits();
+                TraitValueUtility.ColorTraitLabels();
             }
         }
     }
