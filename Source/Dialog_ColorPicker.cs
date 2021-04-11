@@ -44,7 +44,7 @@ namespace SyrTraitValue
 
         public void GenerateTextures()
         {
-            tempStr = $"{color.r},{color.g},{color.b}";
+            tempStr = "R " + color.r.ToStringByStyle(ToStringStyle.FloatTwo) + " | G " + color.g.ToStringByStyle(ToStringStyle.FloatTwo) + " | B " + color.b.ToStringByStyle(ToStringStyle.FloatTwo);
 
             var texture = new Texture2D(256, 256);
             for (var i = 0; i <= 256; i++)
@@ -92,9 +92,8 @@ namespace SyrTraitValue
         public override void DoWindowContents(Rect inRect)
         {
             var rect = inRect.ContractedBy(10f);
-            GUI.color = color;
             Text.Anchor = TextAnchor.MiddleCenter;
-            Widgets.Label(new Rect(rect.x, rect.y, 256f, 30f), "QualityColors.Changing".Translate());
+            Widgets.Label(new Rect(rect.x, rect.y, 256f, 30f), "SyrTraitValue_ColorPicker".Translate());
             Text.Anchor = TextAnchor.UpperLeft;
             GUI.color = Color.white;
             rect.y += 35f;
@@ -103,8 +102,8 @@ namespace SyrTraitValue
             if (Mouse.IsOver(rect2) && Event.current.isMouse && Event.current.button == 0)
             {
                 var pos = Event.current.mousePosition;
-                hue = (pos.x - rect2.x) / 256f;
-                sat = (rect2.yMax - pos.y) / 256f;
+                hue = GenMath.RoundTo((pos.x - rect2.x) / 256f, 0.01f);
+                sat = GenMath.RoundTo((rect2.yMax - pos.y) / 256f, 0.01f);
                 color = Color.HSVToRGB(hue, sat, value);
                 GenerateTextures();
             }
@@ -113,7 +112,7 @@ namespace SyrTraitValue
             GUI.DrawTexture(rect3, textures[1], ScaleMode.StretchToFill);
             if (Mouse.IsOver(rect3) && Event.current.isMouse && Event.current.button == 0)
             {
-                value = (rect3.yMax - Event.current.mousePosition.y) / 256f;
+                value = GenMath.RoundTo((rect3.yMax - Event.current.mousePosition.y) / 256f, 0.01f);
                 color = Color.HSVToRGB(hue, sat, value);
                 GenerateTextures();
             }
@@ -121,8 +120,12 @@ namespace SyrTraitValue
             rect.y += 266f;
 
             rect3 = rect.TopPartPixels(30f);
-            rect3.width /= 2;
+            rect3.width *= 0.7f;
+            GUI.color = Color.grey;
+            GUI.enabled = false;
             tempStr = Widgets.TextField(rect3, tempStr);
+            GUI.color = Color.white;
+            GUI.enabled = true;
             rect3.x = rect3.xMax;
             /*if (Widgets.ButtonText(rect3, "ApplyTechprint".Translate()))
                 try
@@ -143,7 +146,7 @@ namespace SyrTraitValue
             {
                 Log.Message(
                     $"Mouse: {Event.current.mousePosition.x}, Rect: {rect3.x}, Sub: {Event.current.mousePosition.x - rect3.x}, r will be {(Event.current.mousePosition.x - rect3.x) / 256f}");
-                color.r = (Event.current.mousePosition.x - rect3.x) / 256f;
+                color.r = GenMath.RoundTo((Event.current.mousePosition.x - rect3.x) / 256f, 0.01f);
                 SyncColor();
             }
 
@@ -154,7 +157,7 @@ namespace SyrTraitValue
             GUI.DrawTexture(rect3, textures[3], ScaleMode.StretchToFill);
             if (Mouse.IsOver(rect3) && Event.current.isMouse && Event.current.button == 0)
             {
-                color.g = (Event.current.mousePosition.x - rect3.x) / 256f;
+                color.g = GenMath.RoundTo((Event.current.mousePosition.x - rect3.x) / 256f, 0.01f);
                 SyncColor();
             }
 
@@ -165,7 +168,7 @@ namespace SyrTraitValue
             GUI.DrawTexture(rect3, textures[4], ScaleMode.StretchToFill);
             if (Mouse.IsOver(rect3) && Event.current.isMouse && Event.current.button == 0)
             {
-                color.b = (Event.current.mousePosition.x - rect3.x) / 256f;
+                color.b = GenMath.RoundTo((Event.current.mousePosition.x - rect3.x) / 256f, 0.01f);
                 SyncColor();
             }
             /*

@@ -17,6 +17,9 @@ namespace SyrTraitValue
         public TraitValueCore(ModContentPack content) : base(content)
         {
             settings = GetSettings<TraitValueSettings>();
+            LongEventHandler.ExecuteWhenFinished(() => bestColorButton = SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.bestTraitColor));
+            LongEventHandler.ExecuteWhenFinished(() => goodColorButton = SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.goodTraitColor));
+            LongEventHandler.ExecuteWhenFinished(() => neutralColorButton = SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.neutralTraitColor));
             LongEventHandler.ExecuteWhenFinished(() => badColorButton = SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.badTraitColor));
         }
 
@@ -24,6 +27,9 @@ namespace SyrTraitValue
 
         private Vector2 scrollPosition = new Vector2(0f, 0f);
         public static int traitCount = 0;
+        public static Texture2D bestColorButton;
+        public static Texture2D goodColorButton;
+        public static Texture2D neutralColorButton;
         public static Texture2D badColorButton;
         public override void DoSettingsWindowContents(Rect inRect)
         {
@@ -32,23 +38,38 @@ namespace SyrTraitValue
                 Listing_Standard listing_Standard = new Listing_Standard();
                 listing_Standard.Begin(inRect);
                 listing_Standard.CheckboxLabeled("SyrTraitValue_EnableColors".Translate(), ref TraitValueSettings.enableColors, "SyrTraitValue_EnableColorsTooltip".Translate());
-                listing_Standard.Gap(12);
+                listing_Standard.CheckboxLabeled("SyrTraitValue_UseBestColor".Translate(), ref TraitValueSettings.useBestColor, "SyrTraitValue_UseBestColorTooltip".Translate());
 
-                listing_Standard.Label("SyrTraitValue_BadColor", -1, "SyrTraitValue_BadColorTooltip");
-                if (listing_Standard.ButtonImage(badColorButton, 128f, 24f))
+                Rect colorButton1 = new Rect(inRect.x, listing_Standard.CurHeight, inRect.width * 0.25f, 44f);
+                Rect colorButton2 = new Rect(inRect.x + inRect.width * 0.25f, listing_Standard.CurHeight, inRect.width * 0.25f, 44f);
+                Rect colorButton3 = new Rect(inRect.x + inRect.width * 0.5f, listing_Standard.CurHeight, inRect.width * 0.25f, 44f);
+                Rect colorButton4 = new Rect(inRect.x + inRect.width * 0.75f, listing_Standard.CurHeight, inRect.width * 0.25f, 44f);
+                if (ButtonImageLabeled(colorButton1, "SyrTraitValue_BestColor".Translate(), "SyrTraitValue_BestColorTooltip".Translate(), bestColorButton, 128f, 24f))
                 {
-                    Find.WindowStack.Add(new Dialog_ColorPicker(TraitValueSettings.badTraitColor, delegate(Color color) { TraitValueSettings.badTraitColor = color; badColorButton = SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.badTraitColor); badColorButton.Apply(false); TraitValueUtility.ColorTraitLabels(); } ));
+                    Find.WindowStack.Add(new Dialog_ColorPicker(TraitValueSettings.bestTraitColor, delegate(Color color) { TraitValueSettings.bestTraitColor = color; bestColorButton = SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.bestTraitColor); bestColorButton.Apply(false); } ));
                 }
-                listing_Standard.Gap(12);
+                if (ButtonImageLabeled(colorButton2, "SyrTraitValue_GoodColor".Translate(), "SyrTraitValue_GoodColorTooltip".Translate(), goodColorButton, 128f, 24f))
+                {
+                    Find.WindowStack.Add(new Dialog_ColorPicker(TraitValueSettings.goodTraitColor, delegate (Color color) { TraitValueSettings.goodTraitColor = color; goodColorButton = SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.goodTraitColor); goodColorButton.Apply(false); }));
+                }
+                if (ButtonImageLabeled(colorButton3, "SyrTraitValue_NeutralColor".Translate(), "SyrTraitValue_NeutralColorTooltip".Translate(), neutralColorButton, 128f, 24f))
+                {
+                    Find.WindowStack.Add(new Dialog_ColorPicker(TraitValueSettings.neutralTraitColor, delegate (Color color) { TraitValueSettings.neutralTraitColor = color; neutralColorButton = SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.neutralTraitColor); neutralColorButton.Apply(false); }));
+                }
+                if (ButtonImageLabeled(colorButton4, "SyrTraitValue_BadColor".Translate(), "SyrTraitValue_BadColorTooltip".Translate(), badColorButton, 128f, 24f))
+                {
+                    Find.WindowStack.Add(new Dialog_ColorPicker(TraitValueSettings.badTraitColor, delegate (Color color) { TraitValueSettings.badTraitColor = color; badColorButton = SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.badTraitColor); badColorButton.Apply(false); }));
+                }
 
                 Rect outRect = inRect;
-                outRect.height -= 120f;
-                outRect.y += 60f;
+                outRect.height -= 180f;
+                outRect.y += 70f;
                 Rect viewRect = inRect.GetInnerRect();
                 viewRect.height = 27f * traitCount * 0.34f;
                 Rect rowRect1 = new Rect(viewRect.x, viewRect.y, viewRect.width * 0.33f, 24f);
                 Rect rowRect2 = new Rect(viewRect.x + viewRect.width * 0.33f, viewRect.y, viewRect.width * 0.33f, 24f);
                 Rect rowRect3 = new Rect(viewRect.x + viewRect.width * 0.67f, viewRect.y, viewRect.width * 0.33f, 24f);
+
                 Widgets.BeginScrollView(outRect, ref scrollPosition, viewRect);
                 int i = 0;
                 int threshold = Mathf.CeilToInt(traitCount * 0.333f);
@@ -85,12 +106,33 @@ namespace SyrTraitValue
                 if (Widgets.ButtonText(rectDefaultSettings, "ResetBinding".Translate(), true, true, true))
                 {
                     TraitValueSettings.enableColors = true;
+                    TraitValueSettings.useBestColor = true;
                     TraitValueUtility.LoadSavedValues(true);
                     TraitValueSettings.changedTraitValues.Clear();
+                    TraitValueSettings.bestTraitColor = Color.cyan;
+                    bestColorButton = SolidColorMaterials.NewSolidColorTexture(Color.cyan);
+                    bestColorButton.Apply(false);
+                    TraitValueSettings.goodTraitColor = Color.green;
+                    goodColorButton = SolidColorMaterials.NewSolidColorTexture(Color.green);
+                    goodColorButton.Apply(false);
+                    TraitValueSettings.neutralTraitColor = Color.yellow;
+                    neutralColorButton = SolidColorMaterials.NewSolidColorTexture(Color.yellow);
+                    neutralColorButton.Apply(false);
+                    TraitValueSettings.badTraitColor = Color.red;
+                    badColorButton = SolidColorMaterials.NewSolidColorTexture(Color.red);
+                    badColorButton.Apply(false);
                 }
                 listing_Standard.End();
                 settings.Write();
             }
+        }
+
+        public bool ButtonImageLabeled(Rect rect, string label, string tooltip, Texture2D tex, float width, float height)
+        {
+            Widgets.Label(rect, label);
+            TooltipHandler.TipRegion(rect, tooltip);
+            bool result = Widgets.ButtonImage(new Rect(rect.x, rect.y+20f, width, height), tex, true);
+            return result;
         }
 
         public static void TextFieldNumericLabeled<T>(Rect rect, string label, ref T val, ref string buffer, float min = 0f, float max = 1E+09f) where T : struct
@@ -99,7 +141,27 @@ namespace SyrTraitValue
             Rect rectField = new Rect(rect.x + rect.width * 0.8f, rect.y, rect.width * 0.2f, rect.height);
             TextAnchor anchor = Text.Anchor;
             Text.Anchor = TextAnchor.MiddleRight;
-            Widgets.Label(rectLabel, label);
+            if (val is int value && TraitValueSettings.enableColors)
+            {
+                Color originalColor = GUI.color;
+                Color traitColor;
+                TraitValueUtility.ValueColor(value, out traitColor);
+                GUI.color = traitColor;
+                if (label.Contains("<color=#"))
+                {
+                    label = label.Remove(label.IndexOf("<color=#"), 15).Replace("</color>", "");
+                }
+                Widgets.Label(rectLabel, label);
+                GUI.color = originalColor;
+            }
+            else
+            {
+                if (label.Contains("<color=#"))
+                {
+                    label = label.Remove(label.IndexOf("<color=#"), 15).Replace("</color>", "");
+                }
+                Widgets.Label(rectLabel, label);
+            }
             Text.Anchor = anchor;
             Widgets.TextFieldNumeric<T>(rectField, ref val, ref buffer, min, max);
         }
@@ -145,6 +207,7 @@ namespace SyrTraitValue
     public class TraitValueSettings : ModSettings
     {
         public static bool enableColors = true;
+        public static bool useBestColor = true;
         public static Color bestTraitColor = Color.cyan;
         public static Color goodTraitColor = Color.green;
         public static Color neutralTraitColor = Color.yellow;
@@ -155,6 +218,7 @@ namespace SyrTraitValue
         {
             base.ExposeData();
             Scribe_Values.Look<bool>(ref enableColors, "SyrTraitValue_enableColors", true, false);
+            Scribe_Values.Look<bool>(ref useBestColor, "SyrTraitValue_useBestColor", true, false);
             Scribe_Values.Look<Color>(ref bestTraitColor, "SyrTraitValue_bestTraitColor", Color.cyan, false);
             Scribe_Values.Look<Color>(ref goodTraitColor, "SyrTraitValue_goodTraitColor", Color.green, false);
             Scribe_Values.Look<Color>(ref neutralTraitColor, "SyrTraitValue_neutralTraitColor", Color.yellow, false);

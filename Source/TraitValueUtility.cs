@@ -92,7 +92,8 @@ namespace SyrTraitValue
                         }
                         if (!modExtension.traitValues.NullOrEmpty() && !traitDegreeData.label.Contains("<color=#"))
                         {
-                            traitDegreeData.label = ValueColor(modExtension.traitValues.Find(dv => dv.degree == traitDegreeData.degree).value) + traitDegreeData.label.CapitalizeFirst() + "</color>";
+                            Color color;
+                            traitDegreeData.label = ValueColor(modExtension.traitValues.Find(dv => dv.degree == traitDegreeData.degree).value, out color) + traitDegreeData.label.CapitalizeFirst() + "</color>";
                         }
                     }
                 }
@@ -113,23 +114,28 @@ namespace SyrTraitValue
             }
         }
 
-        public static string ValueColor(int value)
+        public static string ValueColor(int value, out Color color)
         {
-            if (value >= bestTraitValue * 0.9)
+            float bestTraitCutoff = bestTraitValue * 0.9f;
+            if (value >= bestTraitCutoff && TraitValueSettings.useBestColor)
             {
                 float t = (float)value / bestTraitValue;
-                return ColorToRichText(Color.Lerp(TraitValueSettings.goodTraitColor, TraitValueSettings.bestTraitColor, t));
+                color = Color.Lerp(TraitValueSettings.goodTraitColor, TraitValueSettings.bestTraitColor, t);
+                return ColorToRichText(color);
             }
             if (value >= 0)
             {
-                float t = (float)value / (bestTraitValue * 0.9f);
-                return ColorToRichText(Color.Lerp(TraitValueSettings.neutralTraitColor, TraitValueSettings.goodTraitColor, t));
+                float t = (float)value / bestTraitCutoff;
+                color = Color.Lerp(TraitValueSettings.neutralTraitColor, TraitValueSettings.goodTraitColor, t);
+                return ColorToRichText(color);
             }
             if (value < 0)
             {
                 float t = (float)value / worstTraitValue;
-                return ColorToRichText(Color.Lerp(TraitValueSettings.neutralTraitColor, TraitValueSettings.badTraitColor, t));
+                color = Color.Lerp(TraitValueSettings.neutralTraitColor, TraitValueSettings.badTraitColor, t);
+                return ColorToRichText(color);
             }
+            color = Color.white;
             return "<color=#FFFFFF>";
         }
 
