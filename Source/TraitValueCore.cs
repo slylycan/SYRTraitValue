@@ -17,12 +17,14 @@ namespace SyrTraitValue
         public TraitValueCore(ModContentPack content) : base(content)
         {
             settings = GetSettings<TraitValueSettings>();
+            LongEventHandler.ExecuteWhenFinished(() => badColorButton = SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.badTraitColor));
         }
 
         public override string SettingsCategory() => "TraitValueSettingsCategory".Translate();
 
         private Vector2 scrollPosition = new Vector2(0f, 0f);
         public static int traitCount = 0;
+        public static Texture2D badColorButton;
         public override void DoSettingsWindowContents(Rect inRect)
         {
             checked
@@ -32,8 +34,16 @@ namespace SyrTraitValue
                 listing_Standard.CheckboxLabeled("SyrTraitValue_EnableColors".Translate(), ref TraitValueSettings.enableColors, "SyrTraitValue_EnableColorsTooltip".Translate());
                 listing_Standard.Gap(12);
 
+                listing_Standard.Label("SyrTraitValue_BadColor", -1, "SyrTraitValue_BadColorTooltip");
+                if (listing_Standard.ButtonImage(badColorButton, 128f, 24f))
+                {
+                    Find.WindowStack.Add(new Dialog_ColorPicker(TraitValueSettings.badTraitColor, delegate(Color color) { TraitValueSettings.badTraitColor = color; badColorButton = SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.badTraitColor); badColorButton.Apply(false); TraitValueUtility.ColorTraitLabels(); } ));
+                }
+                listing_Standard.Gap(12);
+
                 Rect outRect = inRect;
                 outRect.height -= 120f;
+                outRect.y += 60f;
                 Rect viewRect = inRect.GetInnerRect();
                 viewRect.height = 27f * traitCount * 0.34f;
                 Rect rowRect1 = new Rect(viewRect.x, viewRect.y, viewRect.width * 0.33f, 24f);
@@ -97,8 +107,11 @@ namespace SyrTraitValue
         public override void WriteSettings()
         {
             base.WriteSettings();
-            TraitValueUtility.UncolorTraitLabels();
-            if (TraitValueSettings.enableColors)
+            if (!TraitValueSettings.enableColors)
+            {
+                TraitValueUtility.UncolorTraitLabels();
+            }
+            else
             {
                 TraitValueUtility.ColorTraitLabels();
             }
