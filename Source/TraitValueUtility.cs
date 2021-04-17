@@ -125,7 +125,7 @@ namespace SyrTraitValue
             }
             if (value >= 0)
             {
-                float t = (float)value / bestTraitCutoff;
+                float t = (float)value / (TraitValueSettings.useBestColor ? bestTraitCutoff : bestTraitValue);
                 color = Color.Lerp(TraitValueSettings.neutralTraitColor, TraitValueSettings.goodTraitColor, t);
                 return ColorToRichText(color);
             }

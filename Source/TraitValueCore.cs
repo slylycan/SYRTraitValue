@@ -31,6 +31,7 @@ namespace SyrTraitValue
         public static Texture2D goodColorButton;
         public static Texture2D neutralColorButton;
         public static Texture2D badColorButton;
+        public Pawn examplePawn;
         public override void DoSettingsWindowContents(Rect inRect)
         {
             checked
@@ -74,25 +75,27 @@ namespace SyrTraitValue
                 int i = 0;
                 int threshold = Mathf.CeilToInt(traitCount * 0.333f);
                 Dictionary<TraitDegreeData, string> buffers = new Dictionary<TraitDegreeData, string>();
+                //if (examplePawn == null) examplePawn = PawnGenerator.GeneratePawn(DefDatabase<PawnKindDef>.AllDefs.First(pkd => pkd == PawnKindDefOf.Drifter), null);
                 foreach (TraitDef t in TraitValueUtility.allTraits)
                 {
                     foreach (TraitDegreeData tdd in t.degreeDatas)
                     {
                         i++;
                         buffers.TryGetValue(tdd, out string buffer);
+                        Trait exampleTrait = new Trait(t, tdd.degree, true);
                         if (i <= threshold)
                         {
-                            TextFieldNumericLabeled(rowRect1, tdd.label, ref t.GetModExtension<TraitValueExtension>().traitValues.Find(dv => dv.degree == tdd.degree).value, ref buffer, -99, 99);
+                            TextFieldNumericLabeled(rowRect1, tdd.label, TraitDesc(tdd, t), ref t.GetModExtension<TraitValueExtension>().traitValues.Find(dv => dv.degree == tdd.degree).value, ref buffer, -99, 99);
                             rowRect1.y = rowRect1.yMax + 2f;
                         }
                         else if (i <= threshold * 2)
                         {
-                            TextFieldNumericLabeled(rowRect2, tdd.label, ref t.GetModExtension<TraitValueExtension>().traitValues.Find(dv => dv.degree == tdd.degree).value, ref buffer, -99, 99);
+                            TextFieldNumericLabeled(rowRect2, tdd.label, TraitDesc(tdd, t), ref t.GetModExtension<TraitValueExtension>().traitValues.Find(dv => dv.degree == tdd.degree).value, ref buffer, -99, 99);
                             rowRect2.y = rowRect2.yMax + 2f;
                         }
                         else
                         {
-                            TextFieldNumericLabeled(rowRect3, tdd.label, ref t.GetModExtension<TraitValueExtension>().traitValues.Find(dv => dv.degree == tdd.degree).value, ref buffer, -99, 99);
+                            TextFieldNumericLabeled(rowRect3, tdd.label, TraitDesc(tdd, t), ref t.GetModExtension<TraitValueExtension>().traitValues.Find(dv => dv.degree == tdd.degree).value, ref buffer, -99, 99);
                             rowRect3.y = rowRect3.yMax + 2f;
                         }
                     }
@@ -135,7 +138,7 @@ namespace SyrTraitValue
             return result;
         }
 
-        public static void TextFieldNumericLabeled<T>(Rect rect, string label, ref T val, ref string buffer, float min = 0f, float max = 1E+09f) where T : struct
+        public static void TextFieldNumericLabeled<T>(Rect rect, string label, string tooltip, ref T val, ref string buffer, float min = 0f, float max = 1E+09f) where T : struct
         {
             Rect rectLabel = new Rect(rect.x, rect.y, rect.width * 0.77f, rect.height);
             Rect rectField = new Rect(rect.x + rect.width * 0.8f, rect.y, rect.width * 0.2f, rect.height);
@@ -152,6 +155,7 @@ namespace SyrTraitValue
                     label = label.Remove(label.IndexOf("<color=#"), 15).Replace("</color>", "");
                 }
                 Widgets.Label(rectLabel, label);
+                TooltipHandler.TipRegion(rectLabel, tooltip);
                 GUI.color = originalColor;
             }
             else
@@ -161,9 +165,109 @@ namespace SyrTraitValue
                     label = label.Remove(label.IndexOf("<color=#"), 15).Replace("</color>", "");
                 }
                 Widgets.Label(rectLabel, label);
+                TooltipHandler.TipRegion(rectLabel, tooltip);
             }
             Text.Anchor = anchor;
             Widgets.TextFieldNumeric<T>(rectField, ref val, ref buffer, min, max);
+        }
+
+        public static string TraitDesc(TraitDegreeData tdd, TraitDef t)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append(tdd.description);
+            IEnumerable<ThoughtDef> traitThoughts = GetPermaThoughts(tdd, t);
+            bool flag = tdd.skillGains.Count > 0;
+            bool flag2 = traitThoughts.Any();
+            bool flag3 = tdd.statOffsets != null;
+            bool flag4 = tdd.statFactors != null;
+            if (flag || flag2 || flag3 || flag4)
+            {
+                stringBuilder.AppendLine();
+                stringBuilder.AppendLine();
+            }
+            if (flag)
+            {
+                foreach (KeyValuePair<SkillDef, int> keyValuePair in tdd.skillGains)
+                {
+                    if (keyValuePair.Value != 0)
+                    {
+                        string value = "    " + keyValuePair.Key.skillLabel.CapitalizeFirst() + ":   " + keyValuePair.Value.ToString("+##;-##");
+                        stringBuilder.AppendLine(value);
+                    }
+                }
+            }
+            if (flag2)
+            {
+                foreach (ThoughtDef thoughtDef in traitThoughts)
+                {
+                    stringBuilder.AppendLine("    " + "PermanentMoodEffect".Translate() + " " + thoughtDef.stages[0].baseMoodEffect.ToStringByStyle(ToStringStyle.Integer, ToStringNumberSense.Offset));
+                }
+            }
+            if (flag3)
+            {
+                for (int i = 0; i < tdd.statOffsets.Count; i++)
+                {
+                    StatModifier statModifier = tdd.statOffsets[i];
+                    string valueToStringAsOffset = statModifier.ValueToStringAsOffset;
+                    string value2 = "    " + statModifier.stat.LabelCap + " " + valueToStringAsOffset;
+                    stringBuilder.AppendLine(value2);
+                }
+            }
+            if (flag4)
+            {
+                for (int j = 0; j < tdd.statFactors.Count; j++)
+                {
+                    StatModifier statModifier2 = tdd.statFactors[j];
+                    string toStringAsFactor = statModifier2.ToStringAsFactor;
+                    string value3 = "    " + statModifier2.stat.LabelCap + " " + toStringAsFactor;
+                    stringBuilder.AppendLine(value3);
+                }
+            }
+            if (tdd.hungerRateFactor != 1f)
+            {
+                string hunger = tdd.hungerRateFactor.ToStringByStyle(ToStringStyle.PercentOne, ToStringNumberSense.Factor);
+                string value4 = "    " + "HungerRate".Translate() + " " + hunger;
+                stringBuilder.AppendLine(value4);
+            }
+            if (ModsConfig.RoyaltyActive)
+            {
+                List<MeditationFocusDef> allowedMeditationFocusTypes = tdd.allowedMeditationFocusTypes;
+                if (!allowedMeditationFocusTypes.NullOrEmpty<MeditationFocusDef>())
+                {
+                    stringBuilder.AppendLine();
+                    stringBuilder.AppendLine();
+                    stringBuilder.AppendLine("EnablesMeditationFocusType".Translate() + ":\n" + (from f in allowedMeditationFocusTypes
+                                                                                                 select f.LabelCap.RawText).ToLineList("  - ", false));
+                }
+            }
+            if (stringBuilder.Length > 0 && stringBuilder[stringBuilder.Length - 1] == '\n')
+            {
+                if (stringBuilder.Length > 1 && stringBuilder[stringBuilder.Length - 2] == '\r')
+                {
+                    stringBuilder.Remove(stringBuilder.Length - 2, 2);
+                }
+                else
+                {
+                    stringBuilder.Remove(stringBuilder.Length - 1, 1);
+                }
+            }
+            return stringBuilder.ToString();
+        }
+
+        private static IEnumerable<ThoughtDef> GetPermaThoughts(TraitDegreeData tdd, TraitDef t)
+        {
+            TraitDegreeData degree = tdd;
+            List<ThoughtDef> allThoughts = DefDatabase<ThoughtDef>.AllDefsListForReading;
+            int num;
+            for (int i = 0; i < allThoughts.Count; i = num + 1)
+            {
+                if (allThoughts[i].IsSituational && allThoughts[i].Worker is ThoughtWorker_AlwaysActive && allThoughts[i].requiredTraits != null && allThoughts[i].requiredTraits.Contains(t) && (!allThoughts[i].RequiresSpecificTraitsDegree || allThoughts[i].requiredTraitsDegree == degree.degree))
+                {
+                    yield return allThoughts[i];
+                }
+                num = i;
+            }
+            yield break;
         }
 
         public override void WriteSettings()
