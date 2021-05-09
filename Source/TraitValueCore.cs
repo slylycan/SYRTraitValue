@@ -326,7 +326,7 @@ namespace SyrTraitValue
             Scribe_Values.Look<Color>(ref bestTraitColor, "SyrTraitValue_bestTraitColor", Color.cyan, false);
             Scribe_Values.Look<Color>(ref goodTraitColor, "SyrTraitValue_goodTraitColor", Color.green, false);
             Scribe_Values.Look<Color>(ref neutralTraitColor, "SyrTraitValue_neutralTraitColor", Color.yellow, false);
-            Scribe_Values.Look<Color>(ref badTraitColor, "SyrTraitValue_redTraitColor", Color.red, false);
+            Scribe_Values.Look<Color>(ref badTraitColor, "SyrTraitValue_badTraitColor", Color.red, false);
             Scribe_Collections.Look<string, int>(ref changedTraitValues, "SyrTraitValue_changedTraitValues", LookMode.Value, LookMode.Value);
         }
     }
