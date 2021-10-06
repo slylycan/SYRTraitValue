@@ -173,7 +173,7 @@ namespace SyrTraitValue
                 {
                     //Adds mod extension, creates a new list if no mod extensions present, then creates an extension and for each degree a DegreeValue
                     ModMetaData meta = ModLister.GetModWithIdentifier(t.modContentPack.PackageId);
-                    Log.Warning(t.defName + " from the mod " + t.modContentPack.Name + " does not have trait values set up for integration with [SYR] Trait Values. If you want, you can ask the mod author '" + meta.Author + "' to add integration, but be polite about it.");
+                    Log.Warning(t.defName + " from the mod " + t.modContentPack.Name + " does not have trait values set up for integration with [SYR] Trait Values. If you want, you can ask the mod author to add integration, but be polite about it.");
                     t.modExtensions = (t.modExtensions ?? new List<DefModExtension>()).Append(new TraitValueExtension { traitValues = t.degreeDatas.Select(tdd => new DegreeValue(tdd.degree, 0)).ToList() }).ToList();
                 }
             }
