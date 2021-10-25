@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Dialog_ColorPicker.cs" />
     <Compile Include="HarmonyPatches.cs" />
+    <Compile Include="Static_Textures.cs" />
     <Compile Include="TraitValueCore.cs" />
     <Compile Include="TraitValueExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -17,20 +17,12 @@ namespace SyrTraitValue
         public TraitValueCore(ModContentPack content) : base(content)
         {
             settings = GetSettings<TraitValueSettings>();
-            LongEventHandler.ExecuteWhenFinished(() => bestColorButton = SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.bestTraitColor));
-            LongEventHandler.ExecuteWhenFinished(() => goodColorButton = SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.goodTraitColor));
-            LongEventHandler.ExecuteWhenFinished(() => neutralColorButton = SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.neutralTraitColor));
-            LongEventHandler.ExecuteWhenFinished(() => badColorButton = SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.badTraitColor));
         }
 
         public override string SettingsCategory() => "TraitValueSettingsCategory".Translate();
 
         private Vector2 scrollPosition = new Vector2(0f, 0f);
         public static int traitCount = 0;
-        public static Texture2D bestColorButton;
-        public static Texture2D goodColorButton;
-        public static Texture2D neutralColorButton;
-        public static Texture2D badColorButton;
         public Pawn examplePawn;
         public override void DoSettingsWindowContents(Rect inRect)
         {
@@ -45,21 +37,21 @@ namespace SyrTraitValue
                 Rect colorButton2 = new Rect(inRect.x + inRect.width * 0.25f, listing_Standard.CurHeight, inRect.width * 0.25f, 44f);
                 Rect colorButton3 = new Rect(inRect.x + inRect.width * 0.5f, listing_Standard.CurHeight, inRect.width * 0.25f, 44f);
                 Rect colorButton4 = new Rect(inRect.x + inRect.width * 0.75f, listing_Standard.CurHeight, inRect.width * 0.25f, 44f);
-                if (ButtonImageLabeled(colorButton1, "SyrTraitValue_BestColor".Translate(), "SyrTraitValue_BestColorTooltip".Translate(), bestColorButton, 128f, 24f))
+                if (ButtonImageLabeled(colorButton1, "SyrTraitValue_BestColor".Translate(), "SyrTraitValue_BestColorTooltip".Translate(), Static_Textures.bestColorButton, 128f, 24f))
                 {
-                    Find.WindowStack.Add(new Dialog_ColorPicker(TraitValueSettings.bestTraitColor, delegate(Color color) { TraitValueSettings.bestTraitColor = color; bestColorButton = SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.bestTraitColor); bestColorButton.Apply(false); } ));
+                    Find.WindowStack.Add(new Dialog_ColorPicker(TraitValueSettings.bestTraitColor, delegate(Color color) { TraitValueSettings.bestTraitColor = color; Static_Textures.bestColorButton = SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.bestTraitColor); Static_Textures.bestColorButton.Apply(false); } ));
                 }
-                if (ButtonImageLabeled(colorButton2, "SyrTraitValue_GoodColor".Translate(), "SyrTraitValue_GoodColorTooltip".Translate(), goodColorButton, 128f, 24f))
+                if (ButtonImageLabeled(colorButton2, "SyrTraitValue_GoodColor".Translate(), "SyrTraitValue_GoodColorTooltip".Translate(), Static_Textures.goodColorButton, 128f, 24f))
                 {
-                    Find.WindowStack.Add(new Dialog_ColorPicker(TraitValueSettings.goodTraitColor, delegate (Color color) { TraitValueSettings.goodTraitColor = color; goodColorButton = SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.goodTraitColor); goodColorButton.Apply(false); }));
+                    Find.WindowStack.Add(new Dialog_ColorPicker(TraitValueSettings.goodTraitColor, delegate (Color color) { TraitValueSettings.goodTraitColor = color; Static_Textures.goodColorButton = SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.goodTraitColor); Static_Textures.goodColorButton.Apply(false); }));
                 }
-                if (ButtonImageLabeled(colorButton3, "SyrTraitValue_NeutralColor".Translate(), "SyrTraitValue_NeutralColorTooltip".Translate(), neutralColorButton, 128f, 24f))
+                if (ButtonImageLabeled(colorButton3, "SyrTraitValue_NeutralColor".Translate(), "SyrTraitValue_NeutralColorTooltip".Translate(), Static_Textures.neutralColorButton, 128f, 24f))
                 {
-                    Find.WindowStack.Add(new Dialog_ColorPicker(TraitValueSettings.neutralTraitColor, delegate (Color color) { TraitValueSettings.neutralTraitColor = color; neutralColorButton = SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.neutralTraitColor); neutralColorButton.Apply(false); }));
+                    Find.WindowStack.Add(new Dialog_ColorPicker(TraitValueSettings.neutralTraitColor, delegate (Color color) { TraitValueSettings.neutralTraitColor = color; Static_Textures.neutralColorButton = SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.neutralTraitColor); Static_Textures.neutralColorButton.Apply(false); }));
                 }
-                if (ButtonImageLabeled(colorButton4, "SyrTraitValue_BadColor".Translate(), "SyrTraitValue_BadColorTooltip".Translate(), badColorButton, 128f, 24f))
+                if (ButtonImageLabeled(colorButton4, "SyrTraitValue_BadColor".Translate(), "SyrTraitValue_BadColorTooltip".Translate(), Static_Textures.badColorButton, 128f, 24f))
                 {
-                    Find.WindowStack.Add(new Dialog_ColorPicker(TraitValueSettings.badTraitColor, delegate (Color color) { TraitValueSettings.badTraitColor = color; badColorButton = SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.badTraitColor); badColorButton.Apply(false); }));
+                    Find.WindowStack.Add(new Dialog_ColorPicker(TraitValueSettings.badTraitColor, delegate (Color color) { TraitValueSettings.badTraitColor = color; Static_Textures.badColorButton = SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.badTraitColor); Static_Textures.badColorButton.Apply(false); }));
                 }
 
                 Rect outRect = inRect;
@@ -113,17 +105,17 @@ namespace SyrTraitValue
                     TraitValueUtility.LoadSavedValues(true);
                     TraitValueSettings.changedTraitValues.Clear();
                     TraitValueSettings.bestTraitColor = Color.cyan;
-                    bestColorButton = SolidColorMaterials.NewSolidColorTexture(Color.cyan);
-                    bestColorButton.Apply(false);
+                    Static_Textures.bestColorButton = SolidColorMaterials.NewSolidColorTexture(Color.cyan);
+                    Static_Textures.bestColorButton.Apply(false);
                     TraitValueSettings.goodTraitColor = Color.green;
-                    goodColorButton = SolidColorMaterials.NewSolidColorTexture(Color.green);
-                    goodColorButton.Apply(false);
+                    Static_Textures.goodColorButton = SolidColorMaterials.NewSolidColorTexture(Color.green);
+                    Static_Textures.goodColorButton.Apply(false);
                     TraitValueSettings.neutralTraitColor = Color.yellow;
-                    neutralColorButton = SolidColorMaterials.NewSolidColorTexture(Color.yellow);
-                    neutralColorButton.Apply(false);
+                    Static_Textures.neutralColorButton = SolidColorMaterials.NewSolidColorTexture(Color.yellow);
+                    Static_Textures.neutralColorButton.Apply(false);
                     TraitValueSettings.badTraitColor = Color.red;
-                    badColorButton = SolidColorMaterials.NewSolidColorTexture(Color.red);
-                    badColorButton.Apply(false);
+                    Static_Textures.badColorButton = SolidColorMaterials.NewSolidColorTexture(Color.red);
+                    Static_Textures.badColorButton.Apply(false);
                 }
                 listing_Standard.End();
                 settings.Write();

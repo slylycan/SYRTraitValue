@@ -159,7 +159,7 @@ namespace SyrTraitValue
                     traitsWithValue += traitValues;
                     if (degrees != traitValues)
                     {
-                        Log.Warning("WARNING: Trait " + t.defName.ToString() + " from the mod " + t.modContentPack.Name + " has " + degrees + " degrees, but " + traitValues + " values. You should configure one value per trait degree data.");
+                        Log.Warning(t.modContentPack.Name + ": TraitDef " + t.defName.ToString() + " has " + degrees + " degrees, but " + traitValues + " values. You should configure one value per trait degree data.");
                         modExtension.traitValues.AddRange(t.degreeDatas.Where(tdd => modExtension.traitValues.FirstOrDefault(tv => tv.degree == tdd.degree) == null).Select(tdd => new DegreeValue(tdd.degree, 0)));
                     }
                     foreach (DegreeValue degreeValue in modExtension.traitValues)
@@ -173,12 +173,11 @@ namespace SyrTraitValue
                 {
                     //Adds mod extension, creates a new list if no mod extensions present, then creates an extension and for each degree a DegreeValue
                     ModMetaData meta = ModLister.GetModWithIdentifier(t.modContentPack.PackageId);
-                    Log.Warning(t.defName + " from the mod " + t.modContentPack.Name + " does not have trait values set up for integration with [SYR] Trait Values. If you want, you can ask the mod author to add integration, but be polite about it.");
+                    Log.Warning(t.modContentPack.Name + ": TraitDef" + t.defName.ToString() + " does not have trait values set up for integration with [SYR] Trait Values. You can ask the mod author politely to add integration, but accept if they don't want to.");
                     t.modExtensions = (t.modExtensions ?? new List<DefModExtension>()).Append(new TraitValueExtension { traitValues = t.degreeDatas.Select(tdd => new DegreeValue(tdd.degree, 0)).ToList() }).ToList();
                 }
             }
-
-            Log.Message("[SYR] Trait Value Analysis || Traits: " + traitsInTotal + " - Traits with an assigned value: " + traitsWithValue);
+            Log.Message("[SYR] Trait Value Framework || Traits: " + traitsInTotal + " - Traits with an assigned value: " + traitsWithValue);
         }
         public static int bestTraitValue = 0;
         public static int worstTraitValue = 0;

@@ -43,7 +43,7 @@ namespace SyrTraitValue
                 }
                 else if (array.Length != 2)
                 {
-                    Log.ErrorOnce(string.Format("Trait values need two numbers seperated by a comma. Or a single number. Wrong value: {0}", xmlRoot.FirstChild.Value), 16205552, false);
+                    Log.ErrorOnce(string.Format("Trait values need two numbers seperated by a comma. Or a single number. Wrong value: {0}", xmlRoot.FirstChild.Value), 16205552);
                 }
                 else
                 {
