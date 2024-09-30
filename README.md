@@ -1,4 +1,4 @@
-# [[SYR] Trait Value (Continued)]()
+# [[SYR] Trait Value (Continued)](https://steamcommunity.com/sharedfiles/filedetails/?id=3340833768)
 
 ![Image](https://i.imgur.com/buuPQel.png)
 
@@ -106,9 +106,6 @@ Load before ANY trait mod.
 [/quote]
 Collection of my mods for RimWorld
 
-If you enjoy my mods consider dropping me a dime:
-[![Image](https://i.imgur.com/QMURwKz.png)[/url][url=https://www.patreon.com/syrchalis]![Image](https://i.imgur.com/NNM7mbP.png)](https://ko-fi.com/A0A0IJ2R)
-
 ![Image](https://i.imgur.com/PwoNOj4.png)
 
 
@@ -122,3 +119,5 @@ If you enjoy my mods consider dropping me a dime:
 -  Use [RimSort](https://github.com/RimSort/RimSort/releases/latest) to sort your mods
 
 
+
+[![Image](https://img.shields.io/github/v/release/emipa606/SYRTraitValue?label=latest%20version&style=plastic&color=9f1111&labelColor=black)](https://steamcommunity.com/sharedfiles/filedetails/changelog/3340833768)
