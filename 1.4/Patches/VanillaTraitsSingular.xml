@@ -340,6 +340,26 @@
             </li>
           </value>
         </li>
+        <li Class="PatchOperationAddModExtension" MayRequire="Ludeon.RimWorld.Biotech">
+          <xpath>*/TraitDef[defName = "Delicate"]</xpath>
+          <value>
+            <li Class="SyrTraitValue.TraitValueExtension">
+              <traitValues>
+                <li>-30</li>
+              </traitValues>
+            </li>
+          </value>
+        </li>
+        <li Class="PatchOperationAddModExtension" MayRequire="Ludeon.RimWorld.Biotech">
+          <xpath>*/TraitDef[defName = "Recluse"]</xpath>
+          <value>
+            <li Class="SyrTraitValue.TraitValueExtension">
+              <traitValues>
+                <li>-10</li>
+              </traitValues>
+            </li>
+          </value>
+        </li>
       </operations>
     </match>
   </Operation>

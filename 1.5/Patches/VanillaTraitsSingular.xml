@@ -340,6 +340,86 @@
             </li>
           </value>
         </li>
+        <li Class="PatchOperationAddModExtension" MayRequire="Ludeon.RimWorld.Biotech">
+          <xpath>*/TraitDef[defName = "Delicate"]</xpath>
+          <value>
+            <li Class="SyrTraitValue.TraitValueExtension">
+              <traitValues>
+                <li>-30</li>
+              </traitValues>
+            </li>
+          </value>
+        </li>
+        <li Class="PatchOperationAddModExtension" MayRequire="Ludeon.RimWorld.Biotech">
+          <xpath>*/TraitDef[defName = "Recluse"]</xpath>
+          <value>
+            <li Class="SyrTraitValue.TraitValueExtension">
+              <traitValues>
+                <li>-10</li>
+              </traitValues>
+            </li>
+          </value>
+        </li>
+        <li Class="PatchOperationAddModExtension" MayRequire="Ludeon.RimWorld.Anomaly">
+          <xpath>*/TraitDef[defName = "PerfectMemory"]</xpath>
+          <value>
+            <li Class="SyrTraitValue.TraitValueExtension">
+              <traitValues>
+                <li>30</li>
+              </traitValues>
+            </li>
+          </value>
+        </li>
+        <li Class="PatchOperationAddModExtension" MayRequire="Ludeon.RimWorld.Anomaly">
+          <xpath>*/TraitDef[defName = "Occultist"]</xpath>
+          <value>
+            <li Class="SyrTraitValue.TraitValueExtension">
+              <traitValues>
+                <li>10</li>
+              </traitValues>
+            </li>
+          </value>
+        </li>
+        <li Class="PatchOperationAddModExtension" MayRequire="Ludeon.RimWorld.Anomaly">
+          <xpath>*/TraitDef[defName = "Joyous"]</xpath>
+          <value>
+            <li Class="SyrTraitValue.TraitValueExtension">
+              <traitValues>
+                <li>10</li>
+              </traitValues>
+            </li>
+          </value>
+        </li>
+        <li Class="PatchOperationAddModExtension" MayRequire="Ludeon.RimWorld.Anomaly">
+          <xpath>*/TraitDef[defName = "BodyMastery"]</xpath>
+          <value>
+            <li Class="SyrTraitValue.TraitValueExtension">
+              <traitValues>
+                <li>0</li>
+              </traitValues>
+            </li>
+          </value>
+        </li>
+        <li Class="PatchOperationAddModExtension" MayRequire="Ludeon.RimWorld.Anomaly">
+          <xpath>*/TraitDef[defName = "Disturbing"]</xpath>
+          <value>
+            <li Class="SyrTraitValue.TraitValueExtension">
+              <traitValues>
+                <li>-20</li>
+              </traitValues>
+            </li>
+          </value>
+        </li>
+        <li Class="PatchOperationAddModExtension" MayRequire="Ludeon.RimWorld.Anomaly">
+          <xpath>*/TraitDef[defName = "VoidFascination"]</xpath>
+          <value>
+            <li Class="SyrTraitValue.TraitValueExtension">
+              <traitValues>
+                <li>0</li>
+              </traitValues>
+            </li>
+          </value>
+        </li>
       </operations>
     </match>
   </Operation>

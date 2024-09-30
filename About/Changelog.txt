@@ -1,0 +1,5 @@
+# Changelog for SYRTraitValue
+
+1.5.1 - Updated for 1.5, added default values for traits in Biotech and Anomaly
+Used DeepL to update translations for ChineseSimplified, French, German
+
