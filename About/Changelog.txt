@@ -1,5 +1,8 @@
 # Changelog for SYRTraitValue
 
+1.5.3 - Fixed issue with traits added via patches that do not have a trait value defined
+
+
 1.5.2 - Removed duplicated translation string
 
 

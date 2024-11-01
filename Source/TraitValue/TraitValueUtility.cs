@@ -176,21 +176,33 @@ public static class TraitValueUtility
 
     public static void CountTraits()
     {
-        var num = 0;
-        var num2 = 0;
+        var totalDegreeDatas = 0;
+        var totalTraitValues = 0;
+        var recache = false;
         foreach (var allTrait in allTraits)
         {
-            var count = allTrait.degreeDatas.Count;
-            num += count;
-            var modExtension = allTrait.GetModExtension<TraitValueExtension>();
-            if (modExtension != null)
+            if (allTrait == null)
             {
-                var num3 = modExtension.traitValues.Count;
-                num2 += num3;
-                if (count != num3)
+                Log.Warning(
+                    "Encountered a null-value when iterating over traits in the game, perhaps some other mod forcefully removed it after load.");
+                recache = true;
+                continue;
+            }
+
+
+            var count = allTrait.degreeDatas?.Count ?? 0;
+
+            totalDegreeDatas += count;
+            var modExtension = allTrait.GetModExtension<TraitValueExtension>();
+            if (modExtension is { traitValues: not null } && count > 0)
+            {
+                var traitValues = modExtension.traitValues.Count;
+
+                totalTraitValues += traitValues;
+                if (count != traitValues)
                 {
                     Log.Warning(
-                        $"{getTraitsModName(allTrait)}: TraitDef {allTrait.defName} has {count} degrees, but {num3} values. You should configure one value per trait degree data.");
+                        $"{getTraitsModName(allTrait)}: TraitDef {allTrait.defName} has {count} degrees, but {traitValues} values. You should configure one value per trait degree data.");
                     modExtension.traitValues.AddRange(from tdd in allTrait.degreeDatas
                         where modExtension.traitValues.FirstOrDefault(tv => tv.degree == tdd.degree) == null
                         select new DegreeValue(tdd.degree, 0));
@@ -212,17 +224,29 @@ public static class TraitValueUtility
             }
             else
             {
-                ModLister.GetModWithIdentifier(allTrait.modContentPack.PackageId);
                 Log.Warning(
-                    $"{getTraitsModName(allTrait)}: TraitDef{allTrait.defName} does not have trait values set up for integration with [SYR] Trait Values. You can ask the mod author politely to add integration, but accept if they don't want to.");
-                allTrait.modExtensions = (allTrait.modExtensions ?? []).Append(
-                    new TraitValueExtension
-                    {
-                        traitValues = allTrait.degreeDatas.Select(tdd => new DegreeValue(tdd.degree, 0)).ToList()
-                    }).ToList();
+                    $"{getTraitsModName(allTrait)}: TraitDef{allTrait.defName} does not have trait values correctly set up for integration with [SYR] Trait Values. You can ask the mod author politely to add integration, but accept if they don't want to.");
+                try
+                {
+                    allTrait.modExtensions = (allTrait.modExtensions ?? []).Append(
+                        new TraitValueExtension
+                        {
+                            traitValues = allTrait.degreeDatas.Select(tdd => new DegreeValue(tdd.degree, 0)).ToList()
+                        }).ToList();
+                }
+                catch
+                {
+                    // ignored
+                }
             }
         }
 
-        Log.Message($"[SYR] Trait Value Framework || Traits: {num} - Traits with an assigned value: {num2}");
+        if (recache)
+        {
+            CacheTraitDefs();
+        }
+
+        Log.Message(
+            $"[SYR] Trait Value Framework || Traits: {totalDegreeDatas} - Traits with an assigned value: {totalTraitValues}");
     }
 }
