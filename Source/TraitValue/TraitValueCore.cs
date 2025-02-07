@@ -11,19 +11,21 @@ namespace SyrTraitValue;
 
 public class TraitValueCore : Mod
 {
-    public static TraitValueSettings settings;
     public static int traitCount = 0;
     public static readonly Dictionary<string, int> newTraitValues = new Dictionary<string, int>();
     private static string currentVersion;
-    public Pawn examplePawn;
+    public static TraitValueCore Instance;
 
     private Vector2 scrollPosition = new Vector2(0f, 0f);
 
     public TraitValueCore(ModContentPack content) : base(content)
     {
-        settings = GetSettings<TraitValueSettings>();
+        Instance = this;
+        Settings = GetSettings<TraitValueSettings>();
         currentVersion = VersionFromManifest.GetVersionFromModMetaData(content.ModMetaData);
     }
+
+    internal TraitValueSettings Settings { get; }
 
     public override string SettingsCategory()
     {
@@ -37,9 +39,9 @@ public class TraitValueCore : Mod
             var listing_Standard = new Listing_Standard();
             listing_Standard.Begin(inRect);
             listing_Standard.CheckboxLabeled("SyrTraitValue_EnableColors".Translate(),
-                ref TraitValueSettings.enableColors, "SyrTraitValue_EnableColorsTooltip".Translate());
+                ref Settings.enableColors, "SyrTraitValue_EnableColorsTooltip".Translate());
             listing_Standard.CheckboxLabeled("SyrTraitValue_UseBestColor".Translate(),
-                ref TraitValueSettings.useBestColor, "SyrTraitValue_UseBestColorTooltip".Translate());
+                ref Settings.useBestColor, "SyrTraitValue_UseBestColorTooltip".Translate());
 
             var colorButton1 = new Rect(inRect.x, listing_Standard.CurHeight, inRect.width * 0.25f, 44f);
             var colorButton2 = new Rect(inRect.x + (inRect.width * 0.25f), listing_Standard.CurHeight,
@@ -51,11 +53,11 @@ public class TraitValueCore : Mod
             if (ButtonImageLabeled(colorButton1, "SyrTraitValue_BestColor".Translate(),
                     "SyrTraitValue_BestColorTooltip".Translate(), Static_Textures.bestColorButton, 128f, 24f))
             {
-                Find.WindowStack.Add(new Dialog_ColorPicker(TraitValueSettings.bestTraitColor, delegate(Color color)
+                Find.WindowStack.Add(new Dialog_ColorPicker(Settings.bestTraitColor, delegate(Color color)
                 {
-                    TraitValueSettings.bestTraitColor = color;
+                    Settings.bestTraitColor = color;
                     Static_Textures.bestColorButton =
-                        SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.bestTraitColor);
+                        SolidColorMaterials.NewSolidColorTexture(Settings.bestTraitColor);
                     Static_Textures.bestColorButton.Apply(false);
                 }));
             }
@@ -63,11 +65,11 @@ public class TraitValueCore : Mod
             if (ButtonImageLabeled(colorButton2, "SyrTraitValue_GoodColor".Translate(),
                     "SyrTraitValue_GoodColorTooltip".Translate(), Static_Textures.goodColorButton, 128f, 24f))
             {
-                Find.WindowStack.Add(new Dialog_ColorPicker(TraitValueSettings.goodTraitColor, delegate(Color color)
+                Find.WindowStack.Add(new Dialog_ColorPicker(Settings.goodTraitColor, delegate(Color color)
                 {
-                    TraitValueSettings.goodTraitColor = color;
+                    Settings.goodTraitColor = color;
                     Static_Textures.goodColorButton =
-                        SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.goodTraitColor);
+                        SolidColorMaterials.NewSolidColorTexture(Settings.goodTraitColor);
                     Static_Textures.goodColorButton.Apply(false);
                 }));
             }
@@ -75,11 +77,11 @@ public class TraitValueCore : Mod
             if (ButtonImageLabeled(colorButton3, "SyrTraitValue_NeutralColor".Translate(),
                     "SyrTraitValue_NeutralColorTooltip".Translate(), Static_Textures.neutralColorButton, 128f, 24f))
             {
-                Find.WindowStack.Add(new Dialog_ColorPicker(TraitValueSettings.neutralTraitColor, delegate(Color color)
+                Find.WindowStack.Add(new Dialog_ColorPicker(Settings.neutralTraitColor, delegate(Color color)
                 {
-                    TraitValueSettings.neutralTraitColor = color;
+                    Settings.neutralTraitColor = color;
                     Static_Textures.neutralColorButton =
-                        SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.neutralTraitColor);
+                        SolidColorMaterials.NewSolidColorTexture(Settings.neutralTraitColor);
                     Static_Textures.neutralColorButton.Apply(false);
                 }));
             }
@@ -87,11 +89,11 @@ public class TraitValueCore : Mod
             if (ButtonImageLabeled(colorButton4, "SyrTraitValue_BadColor".Translate(),
                     "SyrTraitValue_BadColorTooltip".Translate(), Static_Textures.badColorButton, 128f, 24f))
             {
-                Find.WindowStack.Add(new Dialog_ColorPicker(TraitValueSettings.badTraitColor, delegate(Color color)
+                Find.WindowStack.Add(new Dialog_ColorPicker(Settings.badTraitColor, delegate(Color color)
                 {
-                    TraitValueSettings.badTraitColor = color;
+                    Settings.badTraitColor = color;
                     Static_Textures.badColorButton =
-                        SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.badTraitColor);
+                        SolidColorMaterials.NewSolidColorTexture(Settings.badTraitColor);
                     Static_Textures.badColorButton.Apply(false);
                 }));
             }
@@ -158,26 +160,25 @@ public class TraitValueCore : Mod
             TooltipHandler.TipRegion(rectDefaultSettings.RightHalf(), "RestoreToDefaultSettings".Translate());
             if (Widgets.ButtonText(rectDefaultSettings.RightHalf(), "ResetBinding".Translate()))
             {
-                TraitValueSettings.enableColors = true;
-                TraitValueSettings.useBestColor = true;
+                Settings.enableColors = true;
+                Settings.useBestColor = true;
                 TraitValueUtility.LoadSavedValues(true);
-                TraitValueSettings.changedTraitValues.Clear();
-                TraitValueSettings.bestTraitColor = Color.cyan;
+                Settings.changedTraitValues.Clear();
+                Settings.bestTraitColor = Color.cyan;
                 Static_Textures.bestColorButton = SolidColorMaterials.NewSolidColorTexture(Color.cyan);
                 Static_Textures.bestColorButton.Apply(false);
-                TraitValueSettings.goodTraitColor = Color.green;
+                Settings.goodTraitColor = Color.green;
                 Static_Textures.goodColorButton = SolidColorMaterials.NewSolidColorTexture(Color.green);
                 Static_Textures.goodColorButton.Apply(false);
-                TraitValueSettings.neutralTraitColor = Color.yellow;
+                Settings.neutralTraitColor = Color.yellow;
                 Static_Textures.neutralColorButton = SolidColorMaterials.NewSolidColorTexture(Color.yellow);
                 Static_Textures.neutralColorButton.Apply(false);
-                TraitValueSettings.badTraitColor = Color.red;
+                Settings.badTraitColor = Color.red;
                 Static_Textures.badColorButton = SolidColorMaterials.NewSolidColorTexture(Color.red);
                 Static_Textures.badColorButton.Apply(false);
             }
 
             listing_Standard.End();
-            settings.Write();
         }
     }
 
@@ -196,7 +197,7 @@ public class TraitValueCore : Mod
         var rectField = new Rect(rect.x + (rect.width * 0.8f), rect.y, rect.width * 0.2f, rect.height);
         var anchor = Text.Anchor;
         Text.Anchor = TextAnchor.MiddleRight;
-        if (val is int value && TraitValueSettings.enableColors)
+        if (val is int value && Instance.Settings.enableColors)
         {
             var originalColor = GUI.color;
             TraitValueUtility.ValueColor(value, out var traitColor);
@@ -339,8 +340,7 @@ public class TraitValueCore : Mod
 
     public override void WriteSettings()
     {
-        base.WriteSettings();
-        if (!TraitValueSettings.enableColors)
+        if (!Settings.enableColors)
         {
             TraitValueUtility.UncolorTraitLabels();
         }
@@ -372,11 +372,9 @@ public class TraitValueCore : Mod
             }
         }
 
-        TraitValueSettings.changedTraitValues = newTraitValues
+        Settings.changedTraitValues = newTraitValues
             .Where(kvp => TraitValueUtility.originalTraitValues[kvp.Key] != kvp.Value)
             .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-        //Log.Message("new Trait Values: " + newTraitValues.Keys.Count.ToString());
-        //Log.Message("original Trait Values: " + TraitValueUtility.originalTraitValues.Keys.Count.ToString());
-        //Log.Message("changed Trait Values: " + TraitValueSettings.changedTraitValues.Keys.Count.ToString());
+        base.WriteSettings();
     }
 }

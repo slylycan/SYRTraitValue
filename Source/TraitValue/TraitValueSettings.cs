@@ -6,19 +6,18 @@ namespace SyrTraitValue;
 
 public class TraitValueSettings : ModSettings
 {
-    public static bool enableColors = true;
+    public Color badTraitColor = Color.red;
 
-    public static bool useBestColor = true;
+    public Color bestTraitColor = Color.cyan;
 
-    public static Color bestTraitColor = Color.cyan;
+    public Dictionary<string, int> changedTraitValues = new Dictionary<string, int>();
+    public bool enableColors = true;
 
-    public static Color goodTraitColor = Color.green;
+    public Color goodTraitColor = Color.green;
 
-    public static Color neutralTraitColor = Color.yellow;
+    public Color neutralTraitColor = Color.yellow;
 
-    public static Color badTraitColor = Color.red;
-
-    public static Dictionary<string, int> changedTraitValues = new Dictionary<string, int>();
+    public bool useBestColor = true;
 
     public override void ExposeData()
     {

@@ -1,5 +1,8 @@
 # Changelog for SYRTraitValue
 
+1.5.4 - Config changes should now apply correctly without a need to open the config a second time
+
+
 1.5.3 - Fixed issue with traits added via patches that do not have a trait value defined
 
 

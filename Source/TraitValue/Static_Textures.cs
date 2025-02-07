@@ -16,9 +16,10 @@ public static class Static_Textures
 
     static Static_Textures()
     {
-        bestColorButton = SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.bestTraitColor);
-        goodColorButton = SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.goodTraitColor);
-        neutralColorButton = SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.neutralTraitColor);
-        badColorButton = SolidColorMaterials.NewSolidColorTexture(TraitValueSettings.badTraitColor);
+        bestColorButton = SolidColorMaterials.NewSolidColorTexture(TraitValueCore.Instance.Settings.bestTraitColor);
+        goodColorButton = SolidColorMaterials.NewSolidColorTexture(TraitValueCore.Instance.Settings.goodTraitColor);
+        neutralColorButton =
+            SolidColorMaterials.NewSolidColorTexture(TraitValueCore.Instance.Settings.neutralTraitColor);
+        badColorButton = SolidColorMaterials.NewSolidColorTexture(TraitValueCore.Instance.Settings.badTraitColor);
     }
 }

@@ -14,7 +14,7 @@ public static class HarmonyPatches
         TraitValueUtility.CountTraits();
         TraitValueUtility.CacheXMLValues();
         TraitValueUtility.LoadSavedValues(false);
-        if (TraitValueSettings.enableColors)
+        if (TraitValueCore.Instance.Settings.enableColors)
         {
             TraitValueUtility.ColorTraitLabels();
         }

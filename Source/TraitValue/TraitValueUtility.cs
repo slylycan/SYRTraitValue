@@ -22,7 +22,8 @@ public static class TraitValueUtility
     {
         allTraits.Clear();
         allTraitDegreeDatas.Clear();
-        foreach (var item in DefDatabase<TraitDef>.AllDefs.Where(td => td?.degreeDatas != null))
+        foreach (var item in DefDatabase<TraitDef>.AllDefs.Where(td => td?.degreeDatas != null)
+                     .OrderBy(def => def.label))
         {
             allTraits.Add(item);
             foreach (var degreeData in item.degreeDatas)
@@ -77,7 +78,7 @@ public static class TraitValueUtility
             return;
         }
 
-        foreach (var changedTraitValue in TraitValueSettings.changedTraitValues)
+        foreach (var changedTraitValue in TraitValueCore.Instance.Settings.changedTraitValues)
         {
             var key = changedTraitValue.Key.Split(',');
             var modExtension2 = allTraits.Find(t => t.defName == key[0]).GetModExtension<TraitValueExtension>();
@@ -144,22 +145,25 @@ public static class TraitValueUtility
     public static string ValueColor(int value, out Color color)
     {
         var num = bestTraitValue * 0.9f;
-        if (value >= num && TraitValueSettings.useBestColor)
+        if (value >= num && TraitValueCore.Instance.Settings.useBestColor)
         {
             var t = value / (float)bestTraitValue;
-            color = Color.Lerp(TraitValueSettings.goodTraitColor, TraitValueSettings.bestTraitColor, t);
+            color = Color.Lerp(TraitValueCore.Instance.Settings.goodTraitColor,
+                TraitValueCore.Instance.Settings.bestTraitColor, t);
             return ColorToRichText(color);
         }
 
         if (value >= 0)
         {
-            var t2 = value / (TraitValueSettings.useBestColor ? num : bestTraitValue);
-            color = Color.Lerp(TraitValueSettings.neutralTraitColor, TraitValueSettings.goodTraitColor, t2);
+            var t2 = value / (TraitValueCore.Instance.Settings.useBestColor ? num : bestTraitValue);
+            color = Color.Lerp(TraitValueCore.Instance.Settings.neutralTraitColor,
+                TraitValueCore.Instance.Settings.goodTraitColor, t2);
             return ColorToRichText(color);
         }
 
         var t3 = value / (float)worstTraitValue;
-        color = Color.Lerp(TraitValueSettings.neutralTraitColor, TraitValueSettings.badTraitColor, t3);
+        color = Color.Lerp(TraitValueCore.Instance.Settings.neutralTraitColor,
+            TraitValueCore.Instance.Settings.badTraitColor, t3);
         return ColorToRichText(color);
     }
 

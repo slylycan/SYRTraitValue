@@ -4,10 +4,9 @@ using RimWorld;
 namespace SyrTraitValue;
 
 [HarmonyPatch(typeof(Trait), nameof(Trait.Label), MethodType.Getter)]
-public static class TraitLabelPatch
+public static class Trait_Label
 {
-    [HarmonyPostfix]
-    public static void TraitLabelPostfix(ref string __result)
+    public static void Postfix(ref string __result)
     {
         if (__result.Contains("<color=#"))
         {
