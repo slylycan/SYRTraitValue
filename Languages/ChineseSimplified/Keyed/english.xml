@@ -19,4 +19,6 @@
   <SyrTraitValue_Red>红色</SyrTraitValue_Red>
   <SyrTraitValue_Green>绿色</SyrTraitValue_Green>
   <SyrTraitValue_Blue>蓝色</SyrTraitValue_Blue>
+  <SyrTraitValue_NoNotice>无缺色警告</SyrTraitValue_NoNotice>
+  <SyrTraitValue_NoNoticeTooltip>不显示有关特质缺少颜色信息的警告。</SyrTraitValue_NoNoticeTooltip>
 </LanguageData>

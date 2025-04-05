@@ -19,4 +19,6 @@
   <SyrTraitValue_Red>Rot</SyrTraitValue_Red>
   <SyrTraitValue_Green>Grün</SyrTraitValue_Green>
   <SyrTraitValue_Blue>Blau</SyrTraitValue_Blue>
+  <SyrTraitValue_NoNotice>Keine Warnung vor fehlender Farbe</SyrTraitValue_NoNotice>
+  <SyrTraitValue_NoNoticeTooltip>Zeigen Sie keine Warnungen über fehlende Farbinformationen zu Merkmalen an.</SyrTraitValue_NoNoticeTooltip>
 </LanguageData>

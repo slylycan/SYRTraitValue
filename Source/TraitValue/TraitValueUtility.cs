@@ -228,8 +228,12 @@ public static class TraitValueUtility
             }
             else
             {
-                Log.Warning(
-                    $"{getTraitsModName(allTrait)}: TraitDef{allTrait.defName} does not have trait values correctly set up for integration with [SYR] Trait Values. You can ask the mod author politely to add integration, but accept if they don't want to.");
+                if (!TraitValueCore.Instance.Settings.noNotice)
+                {
+                    Log.Warning(
+                        $"{getTraitsModName(allTrait)}: TraitDef{allTrait.defName} does not have trait values correctly set up for integration with [SYR] Trait Values. You can ask the mod author politely to add integration, but accept if they don't want to.");
+                }
+
                 try
                 {
                     allTrait.modExtensions = (allTrait.modExtensions ?? []).Append(

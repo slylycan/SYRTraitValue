@@ -1,5 +1,9 @@
 # Changelog for SYRTraitValue
 
+1.5.5 - Added option to not show warning about traits missing color info
+Used DeepL to update translations for ChineseSimplified, French, German
+
+
 1.5.4 - Config changes should now apply correctly without a need to open the config a second time
 
 

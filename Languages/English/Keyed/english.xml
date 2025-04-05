@@ -18,4 +18,6 @@
   <SyrTraitValue_Red>Red</SyrTraitValue_Red>
   <SyrTraitValue_Green>Green</SyrTraitValue_Green>
   <SyrTraitValue_Blue>Blue</SyrTraitValue_Blue>
+  <SyrTraitValue_NoNotice>No missing color warning</SyrTraitValue_NoNotice>
+  <SyrTraitValue_NoNoticeTooltip>Do not show warnings about traits missing color info.</SyrTraitValue_NoNoticeTooltip>
 </LanguageData>

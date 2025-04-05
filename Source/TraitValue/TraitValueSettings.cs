@@ -16,6 +16,7 @@ public class TraitValueSettings : ModSettings
     public Color goodTraitColor = Color.green;
 
     public Color neutralTraitColor = Color.yellow;
+    public bool noNotice;
 
     public bool useBestColor = true;
 
@@ -24,6 +25,7 @@ public class TraitValueSettings : ModSettings
         base.ExposeData();
         Scribe_Values.Look(ref enableColors, "SyrTraitValue_enableColors", true);
         Scribe_Values.Look(ref useBestColor, "SyrTraitValue_useBestColor", true);
+        Scribe_Values.Look(ref noNotice, "SyrTraitValue_noNotice");
         Scribe_Values.Look(ref bestTraitColor, "SyrTraitValue_bestTraitColor", Color.cyan);
         Scribe_Values.Look(ref goodTraitColor, "SyrTraitValue_goodTraitColor", Color.green);
         Scribe_Values.Look(ref neutralTraitColor, "SyrTraitValue_neutralTraitColor", Color.yellow);

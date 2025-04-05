@@ -19,4 +19,6 @@
   <SyrTraitValue_Red>Rouge</SyrTraitValue_Red>
   <SyrTraitValue_Green>Vert</SyrTraitValue_Green>
   <SyrTraitValue_Blue>Bleu</SyrTraitValue_Blue>
+  <SyrTraitValue_NoNotice>Pas d'avertissement de couleur manquante</SyrTraitValue_NoNotice>
+  <SyrTraitValue_NoNoticeTooltip>Ne pas afficher d'avertissement sur les traits manquant d'informations sur les couleurs.</SyrTraitValue_NoNoticeTooltip>
 </LanguageData>

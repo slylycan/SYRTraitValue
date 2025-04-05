@@ -38,6 +38,8 @@ public class TraitValueCore : Mod
         {
             var listing_Standard = new Listing_Standard();
             listing_Standard.Begin(inRect);
+            listing_Standard.CheckboxLabeled("SyrTraitValue_NoNotice".Translate(),
+                ref Settings.noNotice, "SyrTraitValue_NoNoticeTooltip".Translate());
             listing_Standard.CheckboxLabeled("SyrTraitValue_EnableColors".Translate(),
                 ref Settings.enableColors, "SyrTraitValue_EnableColorsTooltip".Translate());
             listing_Standard.CheckboxLabeled("SyrTraitValue_UseBestColor".Translate(),
@@ -99,8 +101,8 @@ public class TraitValueCore : Mod
             }
 
             var outRect = inRect;
-            outRect.height -= 180f;
-            outRect.y += 70f;
+            outRect.height = outRect.height - listing_Standard.CurHeight - 44f - 110f;
+            outRect.y = outRect.y + listing_Standard.CurHeight + 44f;
             var viewRect = inRect.GetInnerRect();
             viewRect.height = 27f * traitCount * 0.34f;
             var rowRect1 = new Rect(viewRect.x, viewRect.y, viewRect.width * 0.33f, 24f);
