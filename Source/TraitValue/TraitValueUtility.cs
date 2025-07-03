@@ -8,24 +8,24 @@ namespace SyrTraitValue;
 
 public static class TraitValueUtility
 {
-    public static int bestTraitValue;
+    private static int bestTraitValue;
 
-    public static int worstTraitValue;
+    private static int worstTraitValue;
 
-    public static readonly List<TraitDef> allTraits = [];
+    public static readonly List<TraitDef> AllTraits = [];
 
-    public static readonly List<TraitDegreeData> allTraitDegreeDatas = [];
+    private static readonly List<TraitDegreeData> allTraitDegreeDatas = [];
 
-    public static readonly Dictionary<string, int> originalTraitValues = new Dictionary<string, int>();
+    public static readonly Dictionary<string, int> OriginalTraitValues = new();
 
     public static void CacheTraitDefs()
     {
-        allTraits.Clear();
+        AllTraits.Clear();
         allTraitDegreeDatas.Clear();
         foreach (var item in DefDatabase<TraitDef>.AllDefs.Where(td => td?.degreeDatas != null)
                      .OrderBy(def => def.label))
         {
-            allTraits.Add(item);
+            AllTraits.Add(item);
             foreach (var degreeData in item.degreeDatas)
             {
                 allTraitDegreeDatas.Add(degreeData);
@@ -37,7 +37,7 @@ public static class TraitValueUtility
 
     public static void CacheXMLValues()
     {
-        foreach (var allTrait in allTraits)
+        foreach (var allTrait in AllTraits)
         {
             var modExtension = allTrait.GetModExtension<TraitValueExtension>();
             if (modExtension?.traitValues == null)
@@ -47,7 +47,7 @@ public static class TraitValueUtility
 
             foreach (var traitDegreeData in allTrait.degreeDatas)
             {
-                originalTraitValues.Add($"{allTrait.defName}, {traitDegreeData.degree}",
+                OriginalTraitValues.Add($"{allTrait.defName}, {traitDegreeData.degree}",
                     modExtension.traitValues.Find(dv => dv.degree == traitDegreeData.degree).value);
             }
         }
@@ -57,7 +57,7 @@ public static class TraitValueUtility
     {
         if (reset)
         {
-            foreach (var originalTraitValue in originalTraitValues)
+            foreach (var originalTraitValue in OriginalTraitValues)
             {
                 var key2 = originalTraitValue.Key.Split(',');
                 if (key2.Length != 2)
@@ -66,7 +66,7 @@ public static class TraitValueUtility
                 }
                 else
                 {
-                    var modExtension = allTraits.Find(t => t.defName == key2[0]).GetModExtension<TraitValueExtension>();
+                    var modExtension = AllTraits.Find(t => t.defName == key2[0]).GetModExtension<TraitValueExtension>();
                     if (modExtension != null)
                     {
                         modExtension.traitValues.Find(tv => tv.degree == ParseHelper.FromString<int>(key2[1])).value =
@@ -81,7 +81,7 @@ public static class TraitValueUtility
         foreach (var changedTraitValue in TraitValueCore.Instance.Settings.changedTraitValues)
         {
             var key = changedTraitValue.Key.Split(',');
-            var modExtension2 = allTraits.Find(t => t.defName == key[0]).GetModExtension<TraitValueExtension>();
+            var modExtension2 = AllTraits.Find(t => t.defName == key[0]).GetModExtension<TraitValueExtension>();
             if (modExtension2 != null)
             {
                 modExtension2.traitValues.Find(tv => tv.degree == ParseHelper.FromString<int>(key[1])).value =
@@ -92,7 +92,7 @@ public static class TraitValueUtility
 
     public static void ColorTraitLabels()
     {
-        foreach (var allTrait in allTraits)
+        foreach (var allTrait in AllTraits)
         {
             var modExtension = allTrait.GetModExtension<TraitValueExtension>();
             if (modExtension == null)
@@ -128,7 +128,7 @@ public static class TraitValueUtility
 
     public static void UncolorTraitLabels()
     {
-        foreach (var allTrait in allTraits)
+        foreach (var allTrait in AllTraits)
         {
             foreach (var degreeData in allTrait.degreeDatas)
             {
@@ -150,7 +150,7 @@ public static class TraitValueUtility
             var t = value / (float)bestTraitValue;
             color = Color.Lerp(TraitValueCore.Instance.Settings.goodTraitColor,
                 TraitValueCore.Instance.Settings.bestTraitColor, t);
-            return ColorToRichText(color);
+            return colorToRichText(color);
         }
 
         if (value >= 0)
@@ -158,16 +158,16 @@ public static class TraitValueUtility
             var t2 = value / (TraitValueCore.Instance.Settings.useBestColor ? num : bestTraitValue);
             color = Color.Lerp(TraitValueCore.Instance.Settings.neutralTraitColor,
                 TraitValueCore.Instance.Settings.goodTraitColor, t2);
-            return ColorToRichText(color);
+            return colorToRichText(color);
         }
 
         var t3 = value / (float)worstTraitValue;
         color = Color.Lerp(TraitValueCore.Instance.Settings.neutralTraitColor,
             TraitValueCore.Instance.Settings.badTraitColor, t3);
-        return ColorToRichText(color);
+        return colorToRichText(color);
     }
 
-    public static string ColorToRichText(Color color)
+    private static string colorToRichText(Color color)
     {
         return
             $"<color=#{Mathf.RoundToInt(color.r * 255f):X2}{Mathf.RoundToInt(color.g * 255f):X2}{Mathf.RoundToInt(color.b * 255f):X2}>";
@@ -180,10 +180,10 @@ public static class TraitValueUtility
 
     public static void CountTraits()
     {
-        var totalDegreeDatas = 0;
+        var totalDegreeData = 0;
         var totalTraitValues = 0;
         var recache = false;
-        foreach (var allTrait in allTraits)
+        foreach (var allTrait in AllTraits)
         {
             if (allTrait == null)
             {
@@ -196,7 +196,7 @@ public static class TraitValueUtility
 
             var count = allTrait.degreeDatas?.Count ?? 0;
 
-            totalDegreeDatas += count;
+            totalDegreeData += count;
             var modExtension = allTrait.GetModExtension<TraitValueExtension>();
             if (modExtension is { traitValues: not null } && count > 0)
             {
@@ -255,6 +255,6 @@ public static class TraitValueUtility
         }
 
         Log.Message(
-            $"[SYR] Trait Value Framework || Traits: {totalDegreeDatas} - Traits with an assigned value: {totalTraitValues}");
+            $"[SYR] Trait Value Framework || Traits: {totalDegreeData} - Traits with an assigned value: {totalTraitValues}");
     }
 }

@@ -6,7 +6,7 @@ namespace SyrTraitValue;
 
 public class Dialog_ColorPicker : Window
 {
-    public readonly Action<Color> SetColor;
+    private readonly Action<Color> SetColor;
     private readonly Texture2D[] textures = new Texture2D[6];
 
     private Color color;
@@ -24,10 +24,10 @@ public class Dialog_ColorPicker : Window
         color = initColor;
         doCloseButton = true;
         SetColor = setColor;
-        SyncColor();
+        syncColor();
     }
 
-    public override Vector2 InitialSize => new Vector2(350f, 590f);
+    public override Vector2 InitialSize => new(350f, 590f);
 
     public override void PostClose()
     {
@@ -41,7 +41,7 @@ public class Dialog_ColorPicker : Window
         base.Close(doCloseSound);
     }
 
-    public void GenerateTextures()
+    private void generateTextures()
     {
         tempStr =
             $"R {color.r.ToStringByStyle(ToStringStyle.FloatTwo)} | G {color.g.ToStringByStyle(ToStringStyle.FloatTwo)} | B {color.b.ToStringByStyle(ToStringStyle.FloatTwo)}";
@@ -129,7 +129,7 @@ public class Dialog_ColorPicker : Window
             hue = GenMath.RoundTo((mousePosition.x - rect2.x) / 256f, 0.01f);
             sat = GenMath.RoundTo((rect2.yMax - mousePosition.y) / 256f, 0.01f);
             color = Color.HSVToRGB(hue, sat, value);
-            GenerateTextures();
+            generateTextures();
         }
 
         var rect3 = new Rect(rect2.xMax + 5f, rect.y, 15f, 256f);
@@ -138,7 +138,7 @@ public class Dialog_ColorPicker : Window
         {
             value = GenMath.RoundTo((rect3.yMax - Event.current.mousePosition.y) / 256f, 0.01f);
             color = Color.HSVToRGB(hue, sat, value);
-            GenerateTextures();
+            generateTextures();
         }
 
         rect.y += 266f;
@@ -159,7 +159,7 @@ public class Dialog_ColorPicker : Window
             Log.Message(
                 $"Mouse: {Event.current.mousePosition.x}, Rect: {rect3.x}, Sub: {Event.current.mousePosition.x - rect3.x}, r will be {(Event.current.mousePosition.x - rect3.x) / 256f}");
             color.r = GenMath.RoundTo((Event.current.mousePosition.x - rect3.x) / 256f, 0.01f);
-            SyncColor();
+            syncColor();
         }
 
         rect.y += 40f;
@@ -169,7 +169,7 @@ public class Dialog_ColorPicker : Window
         if (Mouse.IsOver(rect3) && Event.current.isMouse && Event.current.button == 0)
         {
             color.g = GenMath.RoundTo((Event.current.mousePosition.x - rect3.x) / 256f, 0.01f);
-            SyncColor();
+            syncColor();
         }
 
         rect.y += 40f;
@@ -182,12 +182,12 @@ public class Dialog_ColorPicker : Window
         }
 
         color.b = GenMath.RoundTo((Event.current.mousePosition.x - rect3.x) / 256f, 0.01f);
-        SyncColor();
+        syncColor();
     }
 
-    private void SyncColor()
+    private void syncColor()
     {
         Color.RGBToHSV(color, out hue, out sat, out value);
-        GenerateTextures();
+        generateTextures();
     }
 }

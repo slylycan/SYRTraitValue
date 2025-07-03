@@ -12,11 +12,11 @@ namespace SyrTraitValue;
 public class TraitValueCore : Mod
 {
     public static int traitCount = 0;
-    public static readonly Dictionary<string, int> newTraitValues = new Dictionary<string, int>();
+    private static readonly Dictionary<string, int> newTraitValues = new();
     private static string currentVersion;
     public static TraitValueCore Instance;
 
-    private Vector2 scrollPosition = new Vector2(0f, 0f);
+    private Vector2 scrollPosition = new(0f, 0f);
 
     public TraitValueCore(ModContentPack content) : base(content)
     {
@@ -36,23 +36,23 @@ public class TraitValueCore : Mod
     {
         checked
         {
-            var listing_Standard = new Listing_Standard();
-            listing_Standard.Begin(inRect);
-            listing_Standard.CheckboxLabeled("SyrTraitValue_NoNotice".Translate(),
+            var listingStandard = new Listing_Standard();
+            listingStandard.Begin(inRect);
+            listingStandard.CheckboxLabeled("SyrTraitValue_NoNotice".Translate(),
                 ref Settings.noNotice, "SyrTraitValue_NoNoticeTooltip".Translate());
-            listing_Standard.CheckboxLabeled("SyrTraitValue_EnableColors".Translate(),
+            listingStandard.CheckboxLabeled("SyrTraitValue_EnableColors".Translate(),
                 ref Settings.enableColors, "SyrTraitValue_EnableColorsTooltip".Translate());
-            listing_Standard.CheckboxLabeled("SyrTraitValue_UseBestColor".Translate(),
+            listingStandard.CheckboxLabeled("SyrTraitValue_UseBestColor".Translate(),
                 ref Settings.useBestColor, "SyrTraitValue_UseBestColorTooltip".Translate());
 
-            var colorButton1 = new Rect(inRect.x, listing_Standard.CurHeight, inRect.width * 0.25f, 44f);
-            var colorButton2 = new Rect(inRect.x + (inRect.width * 0.25f), listing_Standard.CurHeight,
+            var colorButton1 = new Rect(inRect.x, listingStandard.CurHeight, inRect.width * 0.25f, 44f);
+            var colorButton2 = new Rect(inRect.x + (inRect.width * 0.25f), listingStandard.CurHeight,
                 inRect.width * 0.25f, 44f);
-            var colorButton3 = new Rect(inRect.x + (inRect.width * 0.5f), listing_Standard.CurHeight,
+            var colorButton3 = new Rect(inRect.x + (inRect.width * 0.5f), listingStandard.CurHeight,
                 inRect.width * 0.25f, 44f);
-            var colorButton4 = new Rect(inRect.x + (inRect.width * 0.75f), listing_Standard.CurHeight,
+            var colorButton4 = new Rect(inRect.x + (inRect.width * 0.75f), listingStandard.CurHeight,
                 inRect.width * 0.25f, 44f);
-            if (ButtonImageLabeled(colorButton1, "SyrTraitValue_BestColor".Translate(),
+            if (buttonImageLabeled(colorButton1, "SyrTraitValue_BestColor".Translate(),
                     "SyrTraitValue_BestColorTooltip".Translate(), Static_Textures.bestColorButton, 128f, 24f))
             {
                 Find.WindowStack.Add(new Dialog_ColorPicker(Settings.bestTraitColor, delegate(Color color)
@@ -64,7 +64,7 @@ public class TraitValueCore : Mod
                 }));
             }
 
-            if (ButtonImageLabeled(colorButton2, "SyrTraitValue_GoodColor".Translate(),
+            if (buttonImageLabeled(colorButton2, "SyrTraitValue_GoodColor".Translate(),
                     "SyrTraitValue_GoodColorTooltip".Translate(), Static_Textures.goodColorButton, 128f, 24f))
             {
                 Find.WindowStack.Add(new Dialog_ColorPicker(Settings.goodTraitColor, delegate(Color color)
@@ -76,7 +76,7 @@ public class TraitValueCore : Mod
                 }));
             }
 
-            if (ButtonImageLabeled(colorButton3, "SyrTraitValue_NeutralColor".Translate(),
+            if (buttonImageLabeled(colorButton3, "SyrTraitValue_NeutralColor".Translate(),
                     "SyrTraitValue_NeutralColorTooltip".Translate(), Static_Textures.neutralColorButton, 128f, 24f))
             {
                 Find.WindowStack.Add(new Dialog_ColorPicker(Settings.neutralTraitColor, delegate(Color color)
@@ -88,7 +88,7 @@ public class TraitValueCore : Mod
                 }));
             }
 
-            if (ButtonImageLabeled(colorButton4, "SyrTraitValue_BadColor".Translate(),
+            if (buttonImageLabeled(colorButton4, "SyrTraitValue_BadColor".Translate(),
                     "SyrTraitValue_BadColorTooltip".Translate(), Static_Textures.badColorButton, 128f, 24f))
             {
                 Find.WindowStack.Add(new Dialog_ColorPicker(Settings.badTraitColor, delegate(Color color)
@@ -101,8 +101,8 @@ public class TraitValueCore : Mod
             }
 
             var outRect = inRect;
-            outRect.height = outRect.height - listing_Standard.CurHeight - 44f - 110f;
-            outRect.y = outRect.y + listing_Standard.CurHeight + 44f;
+            outRect.height = outRect.height - listingStandard.CurHeight - 44f - 110f;
+            outRect.y = outRect.y + listingStandard.CurHeight + 44f;
             var viewRect = inRect.GetInnerRect();
             viewRect.height = 27f * traitCount * 0.34f;
             var rowRect1 = new Rect(viewRect.x, viewRect.y, viewRect.width * 0.33f, 24f);
@@ -115,7 +115,7 @@ public class TraitValueCore : Mod
             // ReSharper disable once CollectionNeverUpdated.Local
             var buffers = new Dictionary<TraitDegreeData, string>();
             //if (examplePawn == null) examplePawn = PawnGenerator.GeneratePawn(DefDatabase<PawnKindDef>.AllDefs.First(pkd => pkd == PawnKindDefOf.Drifter), null);
-            foreach (var t in TraitValueUtility.allTraits)
+            foreach (var t in TraitValueUtility.AllTraits)
             {
                 foreach (var tdd in t.degreeDatas)
                 {
@@ -124,21 +124,21 @@ public class TraitValueCore : Mod
                     var trait = new Trait(t, tdd.degree, true);
                     if (i <= threshold)
                     {
-                        TextFieldNumericLabeled(rowRect1, trait.Label, TraitDesc(tdd, t),
+                        textFieldNumericLabeled(rowRect1, trait.Label, traitDesc(tdd, t),
                             ref t.GetModExtension<TraitValueExtension>().traitValues.Find(dv => dv.degree == tdd.degree)
                                 .value, ref buffer, -99, 99);
                         rowRect1.y = rowRect1.yMax + 2f;
                     }
                     else if (i <= threshold * 2)
                     {
-                        TextFieldNumericLabeled(rowRect2, trait.Label, TraitDesc(tdd, t),
+                        textFieldNumericLabeled(rowRect2, trait.Label, traitDesc(tdd, t),
                             ref t.GetModExtension<TraitValueExtension>().traitValues.Find(dv => dv.degree == tdd.degree)
                                 .value, ref buffer, -99, 99);
                         rowRect2.y = rowRect2.yMax + 2f;
                     }
                     else
                     {
-                        TextFieldNumericLabeled(rowRect3, trait.Label, TraitDesc(tdd, t),
+                        textFieldNumericLabeled(rowRect3, trait.Label, traitDesc(tdd, t),
                             ref t.GetModExtension<TraitValueExtension>().traitValues.Find(dv => dv.degree == tdd.degree)
                                 .value, ref buffer, -99, 99);
                         rowRect3.y = rowRect3.yMax + 2f;
@@ -148,9 +148,9 @@ public class TraitValueCore : Mod
 
             Widgets.EndScrollView();
 
-            listing_Standard.Gap(inRect.height - 120f);
-            listing_Standard.GapLine(30f);
-            var rectDefaultSettings = listing_Standard.GetRect(30f);
+            listingStandard.Gap(inRect.height - 120f);
+            listingStandard.GapLine(30f);
+            var rectDefaultSettings = listingStandard.GetRect(30f);
             if (currentVersion != null)
             {
                 GUI.contentColor = Color.gray;
@@ -180,11 +180,12 @@ public class TraitValueCore : Mod
                 Static_Textures.badColorButton.Apply(false);
             }
 
-            listing_Standard.End();
+            listingStandard.End();
         }
     }
 
-    public bool ButtonImageLabeled(Rect rect, string label, string tooltip, Texture2D tex, float width, float height)
+    private static bool buttonImageLabeled(Rect rect, string label, string tooltip, Texture2D tex, float width,
+        float height)
     {
         Widgets.Label(rect, label);
         TooltipHandler.TipRegion(rect, tooltip);
@@ -192,7 +193,8 @@ public class TraitValueCore : Mod
         return result;
     }
 
-    public static void TextFieldNumericLabeled<T>(Rect rect, string label, string tooltip, ref T val, ref string buffer,
+    private static void textFieldNumericLabeled<T>(Rect rect, string label, string tooltip, ref T val,
+        ref string buffer,
         float min = 0f, float max = 1E+09f) where T : struct
     {
         var rectLabel = new Rect(rect.x, rect.y, rect.width * 0.77f, rect.height);
@@ -228,16 +230,17 @@ public class TraitValueCore : Mod
         Widgets.TextFieldNumeric(rectField, ref val, ref buffer, min, max);
     }
 
-    public static string TraitDesc(TraitDegreeData tdd, TraitDef t)
+    private static string traitDesc(TraitDegreeData tdd, TraitDef t)
     {
         var stringBuilder = new StringBuilder();
         stringBuilder.Append(tdd.description);
-        var traitThoughts = GetPermaThoughts(tdd, t);
+        var traitThoughts = getPermaThoughts(tdd, t);
         var skillGains = tdd.skillGains.Count > 0;
-        var traitThouhgts = traitThoughts.Any();
+        var thoughtDefs = traitThoughts as ThoughtDef[] ?? traitThoughts.ToArray();
+        var anyThought = thoughtDefs.Any();
         var statOffsets = tdd.statOffsets != null;
         var statFactors = tdd.statFactors != null;
-        if (skillGains || traitThouhgts || statOffsets || statFactors)
+        if (skillGains || anyThought || statOffsets || statFactors)
         {
             stringBuilder.AppendLine();
             stringBuilder.AppendLine();
@@ -257,9 +260,9 @@ public class TraitValueCore : Mod
             }
         }
 
-        if (traitThouhgts)
+        if (anyThought)
         {
-            foreach (var thoughtDef in traitThoughts)
+            foreach (var thoughtDef in thoughtDefs)
             {
                 stringBuilder.AppendLine("    " + "PermanentMoodEffect".Translate() + " " + thoughtDef.stages[0]
                     .baseMoodEffect.ToStringByStyle(ToStringStyle.Integer, ToStringNumberSense.Offset));
@@ -306,12 +309,12 @@ public class TraitValueCore : Mod
             }
         }
 
-        if (stringBuilder.Length <= 0 || stringBuilder[stringBuilder.Length - 1] != '\n')
+        if (stringBuilder.Length <= 0 || stringBuilder[^1] != '\n')
         {
             return stringBuilder.ToString();
         }
 
-        if (stringBuilder.Length > 1 && stringBuilder[stringBuilder.Length - 2] == '\r')
+        if (stringBuilder.Length > 1 && stringBuilder[^2] == '\r')
         {
             stringBuilder.Remove(stringBuilder.Length - 2, 2);
         }
@@ -323,7 +326,7 @@ public class TraitValueCore : Mod
         return stringBuilder.ToString();
     }
 
-    private static IEnumerable<ThoughtDef> GetPermaThoughts(TraitDegreeData tdd, TraitDef t)
+    private static IEnumerable<ThoughtDef> getPermaThoughts(TraitDegreeData tdd, TraitDef t)
     {
         var allThoughts = DefDatabase<ThoughtDef>.AllDefsListForReading;
         int num;
@@ -351,7 +354,7 @@ public class TraitValueCore : Mod
             TraitValueUtility.ColorTraitLabels();
         }
 
-        foreach (var t in TraitValueUtility.allTraits)
+        foreach (var t in TraitValueUtility.AllTraits)
         {
             foreach (var tdd in t.degreeDatas)
             {
@@ -375,7 +378,7 @@ public class TraitValueCore : Mod
         }
 
         Settings.changedTraitValues = newTraitValues
-            .Where(kvp => TraitValueUtility.originalTraitValues[kvp.Key] != kvp.Value)
+            .Where(kvp => TraitValueUtility.OriginalTraitValues[kvp.Key] != kvp.Value)
             .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         base.WriteSettings();
     }

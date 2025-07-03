@@ -3,7 +3,12 @@
   "CanAdd": "0",
   "CanRemove": "0",
   "SocialImageSet": true,
-  "PreviewVersion": "1.5",
+  "PreviewVersion": "1.6",
   "SearchTags": " trait colors",
-  "LastXmlCleaning": "2025-04-05T22:52:34.1118585+02:00"
+  "LastXmlCleaning": "2025-07-03T19:14:36.3066318+02:00",
+  "Patches": true,
+  "Defs": false,
+  "Assemblies": true,
+  "LinesOfCode": 40109.0,
+  "LinesOfXML": 19187.0
 }

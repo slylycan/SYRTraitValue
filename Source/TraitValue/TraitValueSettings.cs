@@ -10,7 +10,7 @@ public class TraitValueSettings : ModSettings
 
     public Color bestTraitColor = Color.cyan;
 
-    public Dictionary<string, int> changedTraitValues = new Dictionary<string, int>();
+    public Dictionary<string, int> changedTraitValues = new();
     public bool enableColors = true;
 
     public Color goodTraitColor = Color.green;

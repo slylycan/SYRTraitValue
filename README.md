@@ -4,7 +4,8 @@
 
 Update of Syrchaliss mod https://steamcommunity.com/sharedfiles/filedetails/?id=2451324814
 
-Added trait-values for Biotech and Anomaly traits
+- Added trait-values for Biotech and Anomaly traits
+- Added option to not show warning about traits missing color info
 
 ![Image](https://i.imgur.com/pufA0kM.png)
 	

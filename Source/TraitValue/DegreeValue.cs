@@ -36,7 +36,7 @@ public class DegreeValue
         else if (array.Length != 2)
         {
             Log.ErrorOnce(
-                $"Trait values need two numbers seperated by a comma. Or a single number. Wrong value: {xmlRoot.FirstChild.Value}",
+                $"Trait values need two numbers separated by a comma. Or a single number. Wrong value: {xmlRoot.FirstChild.Value}",
                 16205552);
         }
         else
