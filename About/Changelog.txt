@@ -1,5 +1,16 @@
 # Changelog for SYRTraitValue
 
+1.6.1 - Added patches for RimTraits - General Traits
+Alpha Genes
+Alpha Memes
+Big and Small - Framework
+Big and Small - Genes & More
+Vanilla Factions Expanded - Pirates
+Vanilla Psycasts Expanded
+Vanilla Traits Expanded
+Thanks to slylycan!
+
+
 1.6.0 - Mod updated for 1.6 and passed autotests
 
 

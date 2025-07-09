@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 	This patch was taken from RimTraits - General Traits
 	and was modified to work with [SYR] Trait Value (Continued).
@@ -13,7 +13,7 @@
   <Operation Class="PatchOperationFindMod">
     <mods>
       <li>RimTraits - General Traits</li>
-	</mods>
+    </mods>
     <match Class="PatchOperationSequence">
       <operations>
         <li Class="PatchOperationAddModExtension">
@@ -26,7 +26,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_Clumsy"]</xpath>
           <value>
@@ -37,7 +36,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_Hardy"]</xpath>
           <value>
@@ -48,7 +46,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_Feeble"]</xpath>
           <value>
@@ -59,7 +56,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_EasilyAmused"]</xpath>
           <value>
@@ -70,7 +66,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_ConstantlyBemused"]</xpath>
           <value>
@@ -81,7 +76,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_Inquisitive"]</xpath>
           <value>
@@ -92,7 +86,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_Ignorant"]</xpath>
           <value>
@@ -103,7 +96,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_Tidy"]</xpath>
           <value>
@@ -114,7 +106,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_Messy"]</xpath>
           <value>
@@ -128,5 +119,4 @@
       </operations>
     </match>
   </Operation>
-
 </Patch>

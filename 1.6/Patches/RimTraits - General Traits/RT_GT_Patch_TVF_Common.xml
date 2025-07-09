@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 	This patch was taken from RimTraits - General Traits
 	and was modified to work with [SYR] Trait Value (Continued).
@@ -22,7 +22,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_Farsighted"]</xpath>
           <value>
@@ -33,7 +32,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_Athletic"]</xpath>
           <value>
@@ -44,7 +42,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_Stiff"]</xpath>
           <value>
@@ -55,7 +52,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_GoodHygiene"]</xpath>
           <value>
@@ -66,7 +62,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_PoorHygiene"]</xpath>
           <value>
@@ -77,7 +72,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_Persuasive"]</xpath>
           <value>
@@ -88,7 +82,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_Unconvincing"]</xpath>
           <value>
@@ -99,7 +92,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_Resilient"]</xpath>
           <value>
@@ -110,7 +102,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_Fragile"]</xpath>
           <value>
@@ -121,7 +112,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_Energetic"]</xpath>
           <value>
@@ -132,7 +122,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_Sluggish"]</xpath>
           <value>
@@ -143,7 +132,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_Restful"]</xpath>
           <value>
@@ -154,7 +142,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_Restless"]</xpath>
           <value>
@@ -165,7 +152,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_Efficient"]</xpath>
           <value>
@@ -176,7 +162,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_Inefficient"]</xpath>
           <value>
@@ -187,7 +172,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_Valiant"]</xpath>
           <value>
@@ -198,7 +182,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_Craven"]</xpath>
           <value>
@@ -209,7 +192,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_Rowdy"]</xpath>
           <value>
@@ -220,7 +202,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_Composed"]</xpath>
           <value>
@@ -231,7 +212,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_HeatTolerant"]</xpath>
           <value>
@@ -242,7 +222,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_HeatIntolerant"]</xpath>
           <value>
@@ -253,7 +232,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_ColdTolerant"]</xpath>
           <value>
@@ -264,7 +242,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_ColdIntolerant"]</xpath>
           <value>
@@ -275,7 +252,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_Muscular"]</xpath>
           <value>
@@ -286,7 +262,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_Frail"]</xpath>
           <value>
@@ -297,7 +272,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_Abstinent"]</xpath>
           <value>
@@ -308,7 +282,6 @@
             </li>
           </value>
         </li>
-
         <li Class="PatchOperationAddModExtension">
           <xpath>*/TraitDef[defName="RT_Ravenous"]</xpath>
           <value>
@@ -322,5 +295,4 @@
       </operations>
     </match>
   </Operation>
-
 </Patch>
